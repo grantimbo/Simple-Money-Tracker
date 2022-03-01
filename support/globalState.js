@@ -12,7 +12,6 @@ export const GlobalState = () => {
 
 const auth = getAuth();
 const db = getFirestore();
-const shouldLog = true;
 let profileListener = null;
 
 export class GlobalStateProvider extends React.Component {
@@ -40,7 +39,6 @@ export class GlobalStateProvider extends React.Component {
 
   listenForProfile(uid) {
     profileListener = onSnapshot(doc(db, "users", uid), (doc) => {
-      console.log("Current data: ", doc.data());
       this.setState({ profile: doc.data() });
     });
   }
@@ -69,7 +67,6 @@ export class GlobalStateProvider extends React.Component {
   }
 
   render() {
-    shouldLog && console.log(this.state);
     return (
       <Context.Provider
         value={Object.assign(this.state, {
