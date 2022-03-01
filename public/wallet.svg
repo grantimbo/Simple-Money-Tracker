@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="470" viewBox="0 0 470 470">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #cfdcbc;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #77b813;
+      }
+
+      .cls-3 {
+        fill: #bccca2;
+      }
+
+      .cls-4 {
+        fill: #d8e4c5;
+      }
+
+      .cls-5 {
+        fill: #84cc16;
+      }
+
+      .cls-6 {
+        fill: #829862;
+      }
+
+      .cls-7, .cls-8 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Artboard_1" data-name="Artboard 1">
+    <g>
+      <path class="cls-1" d="M235,382.19c128.13,0,232,16.3,232,36.405S363.13,455,235,455,3,438.7,3,418.6,106.87,382.19,235,382.19Z"/>
+      <path id="Rectangle_1_copy" data-name="Rectangle 1 copy" class="cls-2" d="M81.363,78.422H364.685a43,43,0,0,1,43,43V362.075a43,43,0,0,1-43,43H81.363a43,43,0,0,1-43-43V121.422A43,43,0,0,1,81.363,78.422Z"/>
+      <path class="cls-3" d="M91.657,175.008l-8.549-47.7,284-75.109,16.661,108.4Z"/>
+      <path class="cls-4" d="M347.359,178.284L306.679,16,58.139,119.112l22.492,85.179Z"/>
+      <path class="cls-5" d="M38.363,142.921H388.637a43,43,0,0,1,43,43V387.037a43,43,0,0,1-43,43H81.363a43,43,0,0,1-43-43V142.921Z"/>
+      <path class="cls-6" d="M351.917,236.539H419.8a42,42,0,0,1,42,42v3.384a42,42,0,0,1-42,42H351.917a42,42,0,0,1-42-42v-3.384A42,42,0,0,1,351.917,236.539Z"/>
+      <path id="Rounded_Rectangle_1" data-name="Rounded Rectangle 1" class="cls-7" d="M96.438,387.384H374.6a5,5,0,0,1,5,5v0.388a5,5,0,0,1-5,5H96.438a5,5,0,0,1-5-5v-0.388A5,5,0,0,1,96.438,387.384Z"/>
+      <circle class="cls-8" cx="356.719" cy="280.235" r="18.719"/>
+    </g>
+  </g>
+</svg>

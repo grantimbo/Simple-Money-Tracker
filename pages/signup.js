@@ -3,7 +3,9 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Router from "next/router";
-import Link from "next/link";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import ButtonLink from "../components/ButtonLink";
 
 const SignUp = () => {
   const ctx = useContext(Context);
@@ -14,7 +16,7 @@ const SignUp = () => {
 
   const createAccount = () => {
     if (!email || !password) {
-      alert("Please enter an email and password");
+      ctx.notify("success", "Please enter an email and password");
       return;
     }
 
@@ -22,8 +24,6 @@ const SignUp = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-
-        console.log(user);
 
         const addDataToFirebase = async () => {
           await setDoc(doc(db, "users", user.uid), {
@@ -33,40 +33,34 @@ const SignUp = () => {
           });
 
           Router.push("/dash");
+          ctx.notify("success", "Succefully created account");
         };
 
         addDataToFirebase();
-
-        // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+        ctx.notify("error", error.message);
       });
   };
 
   return (
-    <div className="login">
-      <Link href={`/login`}>I have already an Account</Link>
-      <input
-        type={`text`}
-        onChange={(e) => setEmail(e?.target?.value)}
-        placeholder="Email"
-        className="px-4 py-2 border bg-gray-50"
-      />
-      <input
-        type={`password`}
-        onChange={(e) => setPassword(e?.target?.value)}
-        placeholder="Password"
-        className="px-4 py-2 border bg-gray-50"
-      />
-      <button
+    <div className="grid gap-2 max-w-sm p-10 mx-auto mt-36">
+      <h1 className="text-3xl font-medium mb-8 text-center">Create Account</h1>
+
+      <Input type={`text`} setValue={setEmail} placeholder="Email" />
+      <Input type={`password`} setValue={setPassword} placeholder="Password" />
+
+      <Button
         onClick={() => createAccount()}
-        className="px-4 py-2 border bg-blue-600 text-white"
-      >
-        Create Account
-      </button>
+        text="Create Account"
+        icon="person_outline"
+      />
+
+      <ButtonLink
+        href={`/login`}
+        text="I have already an Account"
+        color="gray"
+      />
     </div>
   );
 };

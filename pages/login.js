@@ -3,6 +3,9 @@ import { useState, useContext, useEffect } from "react";
 import { Context } from "../support/globalState";
 import Link from "next/link";
 import Router from "next/router";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import ButtonLink from "../components/ButtonLink";
 
 const Login = () => {
   const ctx = useContext(Context);
@@ -16,44 +19,29 @@ const Login = () => {
   }, [ctx]);
 
   const handleLogIn = () => {
+    console.log("Logging in...");
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-
-        alert("Sign in successful");
-        // ...
+        // const user = userCredential.user;
+        ctx.notify("success", "Sign in successful");
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        // const errorCode = error.code;
+        ctx.notify("error", error.message);
         // ..
       });
   };
 
   return (
-    <div className="login">
-      <input
-        type={`text`}
-        onChange={(e) => setEmail(e?.target?.value)}
-        placeholder="Email"
-        className="px-4 py-2 border bg-gray-50"
-      />
-      <input
-        type={`password`}
-        onChange={(e) => setPassword(e?.target?.value)}
-        placeholder="Password"
-        className="px-4 py-2 border bg-gray-50"
-      />
-      <button
-        onClick={() => handleLogIn()}
-        className="px-4 py-2 border bg-blue-600 text-white"
-      >
-        Log In
-      </button>
-      <Link href={`/signup`}>Create Account</Link>
+    <div className="grid gap-2 max-w-sm p-10 mx-auto mt-36">
+      <h1 className="text-3xl font-medium mb-8 text-center">Login</h1>
+      <Input type={`text`} setValue={setEmail} placeholder="Email" />
+      <Input type={`password`} setValue={setPassword} placeholder="Password" />
+      <Button onClick={() => handleLogIn()} text="Login" icon="lock" />
+      <ButtonLink href={`/signup`} text="Create Account" color="gray" />
     </div>
   );
 };

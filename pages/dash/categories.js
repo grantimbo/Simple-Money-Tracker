@@ -6,6 +6,7 @@ import DashLayout from "../../components/DashLayout";
 import Header from "../../components/Header";
 import { Context } from "../../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
+import Button from "../../components/Button";
 
 export default function Categories() {
   const ctx = useContext(Context);
@@ -74,10 +75,9 @@ export default function Categories() {
   return (
     <div className="">
       <Head>
-        <title>Categories</title>
+        <title>Categories | Simple Money Tracker</title>
       </Head>
 
-      {/* <DashLayout> */}
       <Header />
 
       <main className="p-4">
@@ -105,7 +105,12 @@ export default function Categories() {
             </button>
           </div>
 
-          <Link href="/dash">{`< Back`}</Link>
+          <Link href="/dash">
+            <a className="text-lg bg-lime-500 rounded-full px-4 py-2 text-white flex items-center space-x-2">
+              <span className="material-icons-round">arrow_back</span>
+              <span>Back</span>
+            </a>
+          </Link>
         </div>
 
         <div className="mt-6">
@@ -140,11 +145,12 @@ export default function Categories() {
               className="bg-gray-50 border px-4 py-2 rounded-md focus:outline-orange-500"
               placeholder="Icon"
             />
+
             <button
               onClick={() => addCategory()}
               className="bg-orange-500 text-white px-4 py-2 rounded-lg"
             >
-              Add Category
+              Save Category
             </button>
           </div>
         </div>

@@ -93,7 +93,7 @@ export default function Home() {
             </div>
 
             <Link href="/dash">
-              <a className="text-lg bg-blue-500 rounded-full px-4 py-2 text-white flex items-center space-x-2">
+              <a className="text-lg bg-lime-500 rounded-full px-4 py-2 text-white flex items-center space-x-2">
                 <span className="material-icons-round">arrow_back</span>
                 <span>Back</span>
               </a>

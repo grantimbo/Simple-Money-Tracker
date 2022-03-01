@@ -6,6 +6,7 @@ import Details from "../../components/Details";
 import Header from "../../components/Header";
 import { useState, useContext } from "react";
 import { Context } from "../../support/globalState";
+import Card from "../../components/Card";
 
 export default function Home() {
   const ctx = useContext(Context);
@@ -15,43 +16,19 @@ export default function Home() {
   return (
     <div className="">
       <Head>
-        <title>Dashboard</title>
+        <title>Dashboard | Simple Money Tracker</title>
       </Head>
-      {showDetails && (
-        <Details data={showDetails} setShowDetails={setShowDetails} />
-      )}
+
       <DashLayout>
         <Header />
         <main className="p-4">
           <Overview />
 
-          <div className="grid gap-4 mt-10">
+          <div className="grid gap-3 mt-6">
             {ctx?.profile?.data?.map((e) => {
               return (
-                <div
-                  className="bg-gray-50 border rounded-lg p-4 cursor-pointer"
-                  key={e?.id}
-                  onClick={() => setShowDetails(e)}
-                >
-                  <div className="text-xs border-b pb-1 flex items-center justify-between">
-                    <span>{e?.date}</span>
-                    <span>
-                      {e?.method === "expense" ? "Expenses" : "Income"}
-                      {" : "}
-                      {e?.value}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="flex space-x-3">
-                      <span className="material-icons-round">
-                        {e?.category?.icon}
-                      </span>
-                      <div>{e?.note}</div>
-                    </span>
-                    <div>
-                      {e?.method === "expense" && "-"} {e?.value}
-                    </div>
-                  </div>
+                <div key={e?.id} onClick={() => setShowDetails(e)}>
+                  <Card item={e} />
                 </div>
               );
             })}
@@ -61,13 +38,17 @@ export default function Home() {
             )}
           </div>
           <Link href={`/dash/add`}>
-            <a className="fixed bottom-4 right-6  text-lg bg-blue-500 rounded-full px-4 py-2 text-white mt-8 flex items-center space-x-2">
+            <a className="fixed bottom-10 right-10  text-lg bg-lime-500 rounded-full px-4 py-2 text-white mt-8 flex items-center space-x-2">
               <span className="material-icons-round">add_circle_outline</span>
-              <span>Add</span>
+              <span>Add Item</span>
             </a>
           </Link>
         </main>
       </DashLayout>
+
+      {showDetails && (
+        <Details data={showDetails} setShowDetails={setShowDetails} />
+      )}
     </div>
   );
 }

@@ -45,21 +45,27 @@ export default function Overview() {
       <div className="w-full grid grid-cols-3 gap-5">
         <div
           onClick={() => Router.push(`/dash/income`)}
-          className="bg-gray-50 border rounded-lg p-10 cursor-pointer"
+          className="bg-gray-50 py-10 border rounded-lg flex items-center justify-center cursor-pointer"
         >
-          <div className="text-3xl">{total?.income || 0}</div>
-          <div className="text-xs">Income</div>
+          <div>
+            <div className="text-4xl font-medium">{total?.income || 0}</div>
+            <div className=" font-light">Income</div>
+          </div>
         </div>
         <div
           onClick={() => Router.push(`/dash/expenses`)}
-          className="bg-gray-50 border rounded-lg p-10 cursor-pointer"
+          className="bg-gray-50 py-8 border rounded-lg flex items-center justify-center cursor-pointer"
         >
-          <div className="text-3xl">{total?.expense || 0}</div>
-          <div className="text-xs">Expense</div>
+          <div>
+            <div className="text-4xl font-medium">{total?.expense || 0}</div>
+            <div className=" font-light">Expense</div>
+          </div>
         </div>
-        <div className="bg-gray-50 border rounded-lg p-10">
-          <div className="text-3xl">{total?.balance || 0}</div>
-          <div className="text-xs">Balance</div>
+        <div className="bg-gray-50 py-8 border rounded-lg flex items-center justify-center">
+          <div>
+            <div className="text-4xl font-medium">{total?.balance || 0}</div>
+            <div className=" font-light">Balance</div>
+          </div>
         </div>
       </div>
     </>

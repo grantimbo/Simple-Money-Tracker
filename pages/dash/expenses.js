@@ -4,9 +4,12 @@ import DashLayout from "../../components/DashLayout";
 import Header from "../../components/Header";
 import { Context } from "../../support/globalState";
 import { useState, useContext, useEffect } from "react";
+import Card from "../../components/Card";
+import Details from "../../components/Details";
 
 export default function Expenses() {
   const ctx = useContext(Context);
+  const [showDetails, setShowDetails] = useState(null);
 
   const expenseList = ctx?.profile?.data?.filter(
     (item) => item.method == "expense"
@@ -15,15 +18,16 @@ export default function Expenses() {
   return (
     <div className="">
       <Head>
-        <title>Income</title>
+        <title>Expenses | Simple Money Tracker</title>
       </Head>
 
       <DashLayout>
         <Header />
         <main className="p-4">
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-between mb-4">
+            <h1 className="text-3xl font-medium">Expenses</h1>
             <Link href={`/dash`}>
-              <a className="text-lg bg-blue-500 rounded-full px-4 py-2 text-white flex items-center space-x-2">
+              <a className="text-lg bg-lime-500 rounded-full px-4 py-2 text-white flex items-center space-x-2">
                 <span className="material-icons-round">arrow_back</span>
                 <span>Back</span>
               </a>
@@ -33,30 +37,8 @@ export default function Expenses() {
           <div>
             {expenseList?.map((e) => {
               return (
-                <div
-                  className="bg-gray-50 border rounded-lg p-4 cursor-pointer"
-                  key={e?.id}
-                  onClick={() => setShowDetails(e)}
-                >
-                  <div className="text-xs border-b pb-1 flex items-center justify-between">
-                    <span>{e?.date}</span>
-                    <span>
-                      {e?.method === "expense" ? "Expenses" : "Income"}
-                      {" : "}
-                      {e?.value}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="flex space-x-3">
-                      <span className="material-icons-round">
-                        {e?.category?.icon}
-                      </span>
-                      <div>{e?.note}</div>
-                    </span>
-                    <div>
-                      {e?.method === "expense" && "-"} {e?.value}
-                    </div>
-                  </div>
+                <div key={e?.id} onClick={() => setShowDetails(e)}>
+                  <Card item={e} />
                 </div>
               );
             })}
@@ -65,6 +47,10 @@ export default function Expenses() {
           </div>
         </main>
       </DashLayout>
+
+      {showDetails && (
+        <Details data={showDetails} setShowDetails={setShowDetails} />
+      )}
     </div>
   );
 }
