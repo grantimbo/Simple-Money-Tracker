@@ -6,12 +6,14 @@ import DashLayout from "../../components/DashLayout";
 import Header from "../../components/Header";
 import { Context } from "../../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 export default function Home() {
   const ctx = useContext(Context);
   const [catList, setCatList] = useState(null);
   const [method, setMethod] = useState(0);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(null);
   const [value, setValue] = useState(0);
   const [note, setNote] = useState("");
 
@@ -22,11 +24,12 @@ export default function Home() {
 
   useEffect(() => {
     if (method === 0) {
-      setCatList(ExpenseCategory);
       setCategory(ExpenseCategory?.[0]?.name);
+      setCatList(ExpenseCategory);
+      console.log(ExpenseCategory?.[0]?.name);
     } else {
-      setCatList(IncomeCategory);
       setCategory(IncomeCategory?.[0]?.name);
+      setCatList(IncomeCategory);
     }
   }, [method]);
 
@@ -68,29 +71,10 @@ export default function Home() {
         <Header />
 
         <main className="p-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <button
-                className={`${
-                  method === 0
-                    ? " bg-orange-500"
-                    : "bg-gray-100 text-gray-500 border"
-                } py-2 px-4  rounded-md text-white mr-2`}
-                onClick={() => setMethod(0)}
-              >
-                Expense
-              </button>
-              <button
-                className={`${
-                  method === 1
-                    ? " bg-orange-500"
-                    : "bg-gray-100 text-gray-500 border"
-                } py-2 px-4  rounded-md text-white`}
-                onClick={() => setMethod(1)}
-              >
-                Income
-              </button>
-            </div>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-medium mb-8">{`Add ${
+              method === 0 ? "Expense" : "Income"
+            }`}</h1>
 
             <Link href="/dash">
               <a className="text-lg bg-lime-500 rounded-full px-4 py-2 text-white flex items-center space-x-2">
@@ -100,18 +84,41 @@ export default function Home() {
             </Link>
           </div>
 
+          <div className="border-b-2 border-lime-400 flex space-x-1">
+            <div
+              onClick={() => setMethod(0)}
+              className={`${
+                method === 0
+                  ? "bg-lime-500 text-white"
+                  : "bg-lime-100 text-lime-700 border-lime-400 border-2"
+              } px-4 py-1 border-b-0 rounded-t-xl cursor-pointer`}
+            >
+              Expenses
+            </div>
+            <div
+              onClick={() => setMethod(1)}
+              className={`${
+                method === 1
+                  ? "bg-lime-500 text-white"
+                  : "bg-lime-100 text-lime-500 border-lime-400 border-2"
+              } px-4 py-1 border-b-0 rounded-t-xl cursor-pointer`}
+            >
+              Income
+            </div>
+          </div>
+
           <div className="mt-6">
             <div className="grid grid-cols-3 gap-2">
               {catList?.map((cat) => {
                 return (
                   <div
-                    onClick={() => setCategory(cat)}
+                    onClick={() => setCategory(cat?.name)}
                     key={cat?.name}
                     className={`${
-                      cat?.name == category?.name
-                        ? "bg-orange-200 border-orange-500 text-orange-500"
+                      cat?.name === category
+                        ? "bg-lime-200 border-lime-500 text-lime-600 "
                         : "bg-gray-50"
-                    }  border rounded-lg p-2 cursor-pointer h-16 flex items-center justify-center space-x-2`}
+                    }  border-2 rounded-lg p-2 cursor-pointer h-16 flex items-center justify-center space-x-2`}
                   >
                     {cat?.icon && (
                       <span className="material-icons-round">{cat?.icon}</span>
@@ -123,23 +130,14 @@ export default function Home() {
             </div>
 
             <div className="mt-10 grid gap-3">
-              <textarea
-                onChange={(e) => setNote(e.target.value)}
-                className="border bg-gray-50 px-4 py-2 focus:outline-orange-500"
-                placeholder="Note"
-              />
-              <input
-                type={"number"}
-                onChange={(e) => setValue(e.target.value)}
-                className="bg-gray-50 border px-4 py-2 rounded-md focus:outline-orange-500"
-                placeholder="Value"
-              />
-              <button
+              <Input type={`text`} setValue={setNote} placeholder="Note" />
+              <Input type={`number`} setValue={setValue} placeholder="Amount" />
+
+              <Button
                 onClick={() => addData()}
-                className="bg-orange-500 text-white px-4 py-2 rounded-full"
-              >
-                Add Expense
-              </button>
+                icon={`add_circle_outline`}
+                text={`Add ${method === 0 ? "Expense" : "Income"}`}
+              />
             </div>
           </div>
         </main>

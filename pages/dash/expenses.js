@@ -34,7 +34,7 @@ export default function Expenses() {
             </Link>
           </div>
 
-          <div>
+          <div className="grid gap-3">
             {expenseList?.map((e) => {
               return (
                 <div key={e?.id} onClick={() => setShowDetails(e)}>
