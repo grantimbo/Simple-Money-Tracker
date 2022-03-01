@@ -48,7 +48,7 @@ const Notification = () => {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [ctx.notifications]);
+  }, [ctx?.notifications]);
 
   return (
     <>

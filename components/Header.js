@@ -9,9 +9,9 @@ const Header = () => {
     <header>
       <nav className="flex items-center justify-between flex-wrap bg-gray-50 h-14 px-4 border-b">
         <Link href={`/dash`}>
-          <div className="text-xl font-medium cursor-pointer">
+          <a className="text-xl font-medium cursor-pointer">
             Simple Money Tracker
-          </div>
+          </a>
         </Link>
 
         <span

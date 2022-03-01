@@ -41,7 +41,7 @@ const Details = ({ data, setShowDetails }) => {
           onClick={() => setShowDetails(null)}
           className="absolute right-6 top-2 cursor-pointer"
         >
-          <span class="material-icons-round text-4xl">highlight_off</span>
+          <span className="material-icons-round text-4xl">highlight_off</span>
         </div>
         <div className="font-medium border-b-2 border-gray-200 pb-2 mb-4 flex items-center space-x-2">
           <span className="material-icons-round">{data?.category?.icon}</span>

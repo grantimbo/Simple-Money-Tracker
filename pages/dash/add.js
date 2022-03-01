@@ -26,7 +26,6 @@ export default function Home() {
     if (method === 0) {
       setCategory(ExpenseCategory?.[0]?.name);
       setCatList(ExpenseCategory);
-      console.log(ExpenseCategory?.[0]?.name);
     } else {
       setCategory(IncomeCategory?.[0]?.name);
       setCatList(IncomeCategory);

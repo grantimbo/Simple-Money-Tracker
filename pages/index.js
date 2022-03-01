@@ -29,7 +29,12 @@ export default function Home() {
               />
             </div>
           </div>
-          <Image src={"/wallet.svg"} width={300} height={300} />
+          <Image
+            src={"/wallet.svg"}
+            width={300}
+            height={300}
+            alt={`Just a super simple money tracker.`}
+          />
         </div>
       </main>
 
