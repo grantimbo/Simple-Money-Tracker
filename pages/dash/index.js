@@ -7,11 +7,14 @@ import Header from "../../components/Header";
 import { useState, useContext } from "react";
 import { Context } from "../../support/globalState";
 import Card from "../../components/Card";
+import AddItem from "../../components/AddItem";
+import Button from "../../components/Button";
 
 export default function Home() {
   const ctx = useContext(Context);
 
   const [showDetails, setShowDetails] = useState(null);
+  const [addItem, setAddItem] = useState(false);
 
   return (
     <div className="">
@@ -20,34 +23,55 @@ export default function Home() {
       </Head>
 
       <DashLayout>
-        <Header />
-        <main className="p-4">
-          <Overview />
+        <Overview />
 
-          <div className="grid gap-3 mt-6">
-            {ctx?.profile?.data?.map((e) => {
-              return (
-                <div key={e?.id} onClick={() => setShowDetails(e)}>
-                  <Card item={e} />
-                </div>
-              );
-            })}
+        <Button
+          onClick={() => setAddItem(true)}
+          setAddItem={setAddItem}
+          text="Add Item"
+          icon="add_circle_outline"
+          additionalClasses="mt-8"
+        >
+          Add Item
+        </Button>
 
-            {(ctx?.profile?.data?.length === 0 || !ctx?.profile?.data) && (
-              <div>No data</div>
-            )}
-          </div>
-          <Link href={`/dash/add`}>
-            <a className="fixed bottom-10 right-10  text-lg bg-lime-500 rounded-full px-4 py-2 text-white mt-8 flex items-center space-x-2">
-              <span className="material-icons-round">add_circle_outline</span>
-              <span>Add Item</span>
-            </a>
-          </Link>
-        </main>
+        <div className="mx-auto grid gap-3 mt-6">
+          {ctx?.profile?.data?.map((e) => {
+            return (
+              <div key={e?.id} onClick={() => setShowDetails(e)}>
+                <Card item={e} />
+              </div>
+            );
+          })}
+
+          {(ctx?.profile?.data?.length === 0 || !ctx?.profile?.data) && (
+            <div>No data</div>
+          )}
+        </div>
       </DashLayout>
 
       {showDetails && (
         <Details data={showDetails} setShowDetails={setShowDetails} />
+      )}
+
+      {addItem && (
+        <div className="fixed top-0 left-0 bottom-0 right-0 p-10 fade-in">
+          <div className="bg-gray-50 rounded-lg p-4 max-w-xl w-full mx-auto mt-20 relative z-10 ">
+            <div
+              onClick={() => setAddItem(null)}
+              className="absolute right-3 top-2 cursor-pointer "
+            >
+              <span className="material-icons-round text-4xl">
+                highlight_off
+              </span>
+            </div>
+            <AddItem setAddItem={setAddItem} />
+          </div>
+          <div
+            onClick={() => setAddItem(null)}
+            className="absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-30"
+          />
+        </div>
       )}
     </div>
   );

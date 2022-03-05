@@ -2,11 +2,15 @@ import Router from "next/router";
 import { useContext, useEffect } from "react";
 import { Context } from "../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
+import { numberWithCommas } from "../support/formatNumber";
 
 export default function Overview() {
   const ctx = useContext(Context);
   const {
-    profile: { total },
+    profile: {
+      account: { currency },
+      total,
+    },
   } = ctx;
 
   useEffect(() => {
@@ -32,38 +36,44 @@ export default function Overview() {
 
     const db = getFirestore();
     const updateData = async () => {
-      await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
-        // add data to database
-        console.log("Successfully updated data");
-      });
+      await setDoc(doc(db, "users", ctx?.uid), tmpData);
     };
     updateData();
   }, []);
 
   return (
     <>
-      <div className="w-full grid grid-cols-3 gap-5">
+      <div className="w-full grid grid-cols-3 gap-5 mt-6">
         <div
           onClick={() => Router.push(`/dash/income`)}
-          className="bg-gray-50 py-10 border rounded-lg flex items-center justify-center cursor-pointer"
+          className="bg-gray-50 py-6 px-6 border rounded-lg flex items-center  cursor-pointer"
         >
           <div>
-            <div className="text-4xl font-medium">{total?.income || 0}</div>
+            <div className="text-4xl font-medium">{`${
+              currency ? currency : "$"
+            }${numberWithCommas(total?.income || 0)}`}</div>
             <div className=" font-light">Income</div>
           </div>
         </div>
         <div
           onClick={() => Router.push(`/dash/expenses`)}
-          className="bg-gray-50 py-8 border rounded-lg flex items-center justify-center cursor-pointer"
+          className="bg-gray-50 py-6 px-6 border rounded-lg flex items-center  cursor-pointer"
         >
           <div>
-            <div className="text-4xl font-medium">{total?.expense || 0}</div>
+            <div className="text-4xl font-medium">{`${
+              currency ? currency : "$"
+            }${numberWithCommas(total?.expense || 0)}`}</div>
             <div className=" font-light">Expense</div>
           </div>
         </div>
-        <div className="bg-gray-50 py-8 border rounded-lg flex items-center justify-center">
+        <div
+          onClick={() => Router.push(`/dash/balance`)}
+          className="bg-gray-50 py-6 px-6 border rounded-lg flex items-center  cursor-pointer"
+        >
           <div>
-            <div className="text-4xl font-medium">{total?.balance || 0}</div>
+            <div className="text-4xl font-medium">{`${
+              currency ? currency : "$"
+            }${numberWithCommas(total?.balance || 0)}`}</div>
             <div className=" font-light">Balance</div>
           </div>
         </div>

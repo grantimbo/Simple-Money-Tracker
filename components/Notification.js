@@ -16,7 +16,7 @@ const Notification = () => {
       case "success":
         return (
           <div
-            className={`bg-lime-500 text-white px-6 py-4 rounded-lg space-x-2 flex items-center`}
+            className={`bg-lime-500 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in`}
           >
             <span className="material-icons-round text-3xl">done</span>
             <span>{e.notificationText}</span>
@@ -24,14 +24,14 @@ const Notification = () => {
         );
       case "error":
         return (
-          <div className="bg-red-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center">
+          <div className="bg-red-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in">
             <span className="material-icons-round text-3xl">error_outline</span>
             <span>{e.notificationText}</span>
           </div>
         );
       case "info":
         return (
-          <div className="bg-orange-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center">
+          <div className="bg-orange-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in">
             <span className="material-icons-round text-3xl">info_outline</span>
             <span>{e.notificationText}</span>
           </div>

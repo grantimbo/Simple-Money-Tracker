@@ -1,30 +1,41 @@
 import { useState, useContext, useEffect } from "react";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import { Context } from "../../support/globalState";
-import Header from "../../components/Header";
 import Head from "next/head";
 import DashLayout from "../../components/DashLayout";
 import Button from "../../components/Button";
 import ButtonLink from "../../components/ButtonLink";
 import Input from "../../components/Input";
+import BackHomeLink from "../../components/BackHomeLink";
+import PageTitle from "../../components/PageTitle";
 
 const Settings = () => {
   const ctx = useContext(Context);
 
-  const [name, setName] = useState(ctx?.profile?.name);
-  const [category, setCategory] = useState(0);
-  const [catList, setCatList] = useState([]);
+  const [name, setName] = useState(ctx?.profile?.account?.name);
+  const [currency, setCurrency] = useState(ctx?.profile?.account?.currency);
 
-  // create array of categories
-  const ExpenseCategory = ctx?.profile?.category?.expense;
-  const IncomeCategory = ctx?.profile?.category?.income;
-
-  useEffect(() => {
-    if (category === 0) {
-      setCatList(ExpenseCategory);
-    } else {
-      setCatList(IncomeCategory);
+  const saveInfo = async () => {
+    if (!currency) {
+      ctx.notify("error", `Currency must not be empty`);
+      return;
     }
-  }, [category]);
+
+    const tmpData = {
+      ...ctx?.profile,
+      account: {
+        name: name,
+        currency: currency,
+      },
+    };
+
+    // Add a new document in collection "cities"
+    const db = getFirestore();
+    await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
+      // add data to database
+      ctx.notify("success", "Profile updated");
+    });
+  };
 
   return (
     <div>
@@ -33,62 +44,84 @@ const Settings = () => {
       </Head>
 
       <DashLayout>
-        <Header />
-        <main className="p-4">
-          <h1 className="text-3xl font-medium mb-8">Profile</h1>
-          <div className="grid gap-2 max-w-xs mb-10">
-            <Input type={`text`} setValue={setName} placeholder="Name" />
-            <Button onClick={() => saveInfo()} text="Save" icon="lock" />
-          </div>
+        <BackHomeLink />
 
-          <h1 className="text-3xl font-medium mb-8">Categories</h1>
-          <div className="border-b-2 border-lime-400 flex space-x-1">
-            <div
-              onClick={() => setCategory(0)}
-              className={`${
-                category === 0
-                  ? "bg-lime-500 text-white"
-                  : "bg-lime-100 text-lime-700 border-lime-400 border-2"
-              } px-4 py-1 border-b-0 rounded-t-xl cursor-pointer`}
-            >
-              Expenses
-            </div>
-            <div
-              onClick={() => setCategory(1)}
-              className={`${
-                category === 1
-                  ? "bg-lime-500 text-white"
-                  : "bg-lime-100 text-lime-500 border-lime-400 border-2"
-              } px-4 py-1 border-b-0 rounded-t-xl cursor-pointer`}
-            >
-              Income
-            </div>
-          </div>
+        <PageTitle title="Settings" />
 
-          <div className="grid grid-cols-3 gap-2 mb-6 mt-2">
-            {catList?.map((cat) => {
-              return (
-                <div
-                  key={cat?.name}
-                  className={`bg-gray-50 border rounded-lg p-2  h-16 flex items-center justify-center space-x-2 text-gray-600`}
-                >
-                  {cat?.icon && (
-                    <span className="material-icons-round text-gray-500">
-                      {cat?.icon}
-                    </span>
-                  )}
-                  <span>{cat?.name}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          <ButtonLink
-            text="Add Cagegories"
-            href="/dash/categories"
-            icon="add_circle_outline"
+        <section className="grid max-w-xs mb-16">
+          <p className="text-gray-400 text-md mb-1">Name</p>
+          <Input
+            type={`text`}
+            color="gray"
+            value={name}
+            setValue={setName}
+            placeholder="Hudson Grant"
+            additionalClasses="mb-4"
           />
-        </main>
+          <p className="text-gray-400 text-md mb-1">Currency</p>
+          <Input
+            type={`text`}
+            color="gray"
+            value={currency}
+            setValue={setCurrency}
+            placeholder="$"
+            additionalClasses="mb-4"
+          />
+          <Button onClick={() => saveInfo()} text="Save" icon="lock" />
+        </section>
+
+        <PageTitle title="Categories" />
+
+        <section className="grid grid-cols-2 gap-2 w-8/12 mb-6">
+          <div>
+            <h2 className="text-gray-400 text-md mb-1">Expenses</h2>
+            <div className="grid gap-2">
+              {ctx?.profile?.category?.expense?.map((cat) => {
+                return (
+                  <div
+                    key={cat?.name}
+                    className={`bg-gray-50 border rounded-full py-2 px-4 text-sm flex items-center  space-x-2 text-gray-600`}
+                  >
+                    {cat?.icon && (
+                      <span className="material-icons-round text-gray-500">
+                        {cat?.icon}
+                      </span>
+                    )}
+                    <span>{cat?.name}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-gray-400 text-md mb-1">Income</h2>
+            <div className="grid gap-2">
+              {ctx?.profile?.category?.income?.map((cat) => {
+                return (
+                  <div
+                    key={cat?.name}
+                    className={`bg-gray-50 border rounded-full py-2 px-4 text-sm flex items-center  space-x-2 text-gray-600`}
+                  >
+                    {cat?.icon && (
+                      <span className="material-icons-round text-gray-500">
+                        {cat?.icon}
+                      </span>
+                    )}
+                    <span>{cat?.name}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <ButtonLink
+          additionalClasses="w-full max-w-xs"
+          text="Edit Categories"
+          href="/dash/categories"
+          icon="edit"
+        />
       </DashLayout>
     </div>
   );

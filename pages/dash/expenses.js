@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import DashLayout from "../../components/DashLayout";
-import Header from "../../components/Header";
 import { Context } from "../../support/globalState";
 import { useState, useContext, useEffect } from "react";
 import Card from "../../components/Card";
 import Details from "../../components/Details";
+import BackHomeLink from "../../components/BackHomeLink";
+import PageTitle from "../../components/PageTitle";
 
 export default function Expenses() {
   const ctx = useContext(Context);
@@ -22,30 +23,21 @@ export default function Expenses() {
       </Head>
 
       <DashLayout>
-        <Header />
-        <main className="p-4">
-          <div className="flex justify-between mb-4">
-            <h1 className="text-3xl font-medium">Expenses</h1>
-            <Link href={`/dash`}>
-              <a className="text-lg bg-lime-500 rounded-full px-4 py-2 text-white flex items-center space-x-2">
-                <span className="material-icons-round">arrow_back</span>
-                <span>Back</span>
-              </a>
-            </Link>
-          </div>
+        <BackHomeLink />
 
-          <div className="grid gap-3">
-            {expenseList?.map((e) => {
-              return (
-                <div key={e?.id} onClick={() => setShowDetails(e)}>
-                  <Card item={e} />
-                </div>
-              );
-            })}
+        <PageTitle title={`Expenses`} />
 
-            {(expenseList?.length === 0 || !expenseList) && <div>No data</div>}
-          </div>
-        </main>
+        <div className="grid gap-3">
+          {expenseList?.map((e) => {
+            return (
+              <div key={e?.id} onClick={() => setShowDetails(e)}>
+                <Card item={e} />
+              </div>
+            );
+          })}
+
+          {(expenseList?.length === 0 || !expenseList) && <div>No data</div>}
+        </div>
       </DashLayout>
 
       {showDetails && (

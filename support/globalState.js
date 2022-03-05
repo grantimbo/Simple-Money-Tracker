@@ -52,7 +52,6 @@ export class GlobalStateProvider extends React.Component {
           loggedIn: true,
         });
         this.listenForProfile(user.uid);
-        console.log(user);
       } else {
         this.setState({
           uid: null,
@@ -62,7 +61,6 @@ export class GlobalStateProvider extends React.Component {
         });
         profileListener && profileListener();
       }
-      console.log(user);
     });
   }
 

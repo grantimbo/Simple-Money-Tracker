@@ -1,6 +1,7 @@
 import Router from "next/router";
 import { useContext, useEffect } from "react";
 import { Context } from "../support/globalState";
+import Header from "./Header";
 
 export default function DashLayout({ children }) {
   const ctx = useContext(Context);
@@ -23,7 +24,10 @@ export default function DashLayout({ children }) {
           <h1 className="text-3xl font-medium">Loading...</h1>
         </div>
       ) : (
-        <div>{children}</div>
+        <>
+          <Header />
+          <main className="p-4 max-w-screen-lg mx-auto">{children}</main>
+        </>
       )}
     </>
   );
