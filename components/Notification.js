@@ -5,7 +5,6 @@ const Notification = () => {
   const ctx = useContext(Context);
 
   const killNotification = (arrayIndex) => {
-    console.log(arrayIndex);
     const snapshot = [...ctx.notifications];
     snapshot.splice(arrayIndex, 1);
     ctx.set("notifications", snapshot);

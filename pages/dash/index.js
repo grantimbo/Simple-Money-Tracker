@@ -55,7 +55,7 @@ export default function Home() {
       )}
 
       {addItem && (
-        <div className="fixed top-0 left-0 bottom-0 right-0 p-10 fade-in">
+        <div className="fixed -top-2 left-0 bottom-0 right-0 p-10 fade-in">
           <div className="bg-gray-50 rounded-lg p-4 max-w-xl w-full mx-auto mt-20 relative z-10 ">
             <div
               onClick={() => setAddItem(null)}

@@ -26,7 +26,7 @@ export default function DashLayout({ children }) {
       ) : (
         <>
           <Header />
-          <main className="p-4 max-w-screen-lg mx-auto">{children}</main>
+          <main className="p-4 max-w-screen-lg mx-auto mb-24">{children}</main>
         </>
       )}
     </>

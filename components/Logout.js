@@ -22,7 +22,7 @@ const LogOut = () => {
   return (
     <button
       onClick={() => handleSignOut()}
-      className="px-3 py-1 flex items-center space-x-2"
+      className="px-4 py-2 flex items-center space-x-2"
     >
       <span className="material-icons-round text-[1.1rem]">lock_open</span>
       <span>Logout</span>

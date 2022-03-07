@@ -16,6 +16,8 @@ const AddItem = ({ setAddItem }) => {
   const [value, setValue] = useState(0);
   const [note, setNote] = useState("");
 
+  const currencySign = ctx?.profile?.account?.currency || "$";
+
   // create array of categories
   const ExpenseCategory = ctx?.profile?.category?.expense;
   const IncomeCategory = ctx?.profile?.category?.income;
@@ -100,29 +102,16 @@ const AddItem = ({ setAddItem }) => {
       </div>
 
       <div className="mt-6">
-        <p className="text-gray-400 text-md mb-1">Category</p>
-        <div className="grid grid-cols-4 gap-2">
-          {catList?.map((cat) => {
-            return (
-              <div
-                onClick={() => setCategory(cat?.name)}
-                key={cat?.name}
-                className={`${
-                  cat?.name === category
-                    ? "bg-lime-200 border-lime-500 text-lime-600 "
-                    : "bg-gray-50 text-gray-500"
-                }  border-2 rounded-full px-4 py-2 cursor-pointer flex items-center justify-center space-x-2`}
-              >
-                {cat?.icon && (
-                  <span className="material-icons-round">{cat?.icon}</span>
-                )}
-                <span>{cat?.name}</span>
-              </div>
-            );
-          })}
-        </div>
-
         <div className="mt-6 grid ">
+          <p className="text-gray-400 text-md mb-1">Amount</p>
+          <Input
+            color={`gray`}
+            type={`number`}
+            setValue={setValue}
+            placeholder={`${currencySign}0.00`}
+            additionalClasses="mb-5"
+          />
+
           <p className="text-gray-400 text-md mb-1">Note</p>
           <Input
             color={`gray`}
@@ -133,14 +122,28 @@ const AddItem = ({ setAddItem }) => {
             }`}
             additionalClasses="mb-4"
           />
-          <p className="text-gray-400 text-md mb-1">Abount</p>
-          <Input
-            color={`gray`}
-            type={`number`}
-            setValue={setValue}
-            placeholder="$0.00"
-            additionalClasses="mb-5"
-          />
+
+          <p className="text-gray-400 text-md mb-1">Category</p>
+          <div className="grid grid-cols-4 gap-2 mb-6">
+            {catList?.map((cat) => {
+              return (
+                <div
+                  onClick={() => setCategory(cat?.name)}
+                  key={cat?.name}
+                  className={`${
+                    cat?.name === category
+                      ? "bg-lime-200 border-lime-500 text-lime-600 "
+                      : "bg-gray-50 text-gray-500"
+                  }  border-2 rounded-full px-4 py-2 cursor-pointer flex items-center justify-center space-x-2`}
+                >
+                  {cat?.icon && (
+                    <span className="material-icons-round">{cat?.icon}</span>
+                  )}
+                  <span>{cat?.name}</span>
+                </div>
+              );
+            })}
+          </div>
 
           <Button
             onClick={() => addData()}
