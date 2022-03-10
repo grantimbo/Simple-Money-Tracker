@@ -1,48 +1,26 @@
-import Head from "next/head";
-import Link from "next/link";
-import DashLayout from "../../components/DashLayout";
+import { useContext } from "react";
 import { Context } from "../../support/globalState";
-import { useState, useContext, useEffect } from "react";
-import Card from "../../components/Card";
-import Details from "../../components/Details";
+import DashLayout from "../../components/DashLayout";
 import BackHomeLink from "../../components/BackHomeLink";
 import PageTitle from "../../components/PageTitle";
+import List from "../../components/List";
+import Title from "../../components/Title";
 
 export default function Expenses() {
   const ctx = useContext(Context);
-  const [showDetails, setShowDetails] = useState(null);
 
   const expenseList = ctx?.profile?.data?.filter(
     (item) => item.method == "expense"
   );
 
   return (
-    <div className="">
-      <Head>
-        <title>Expenses | Simple Money Tracker</title>
-      </Head>
-
+    <>
+      <Title title="Expense" />
       <DashLayout>
         <BackHomeLink />
-
-        <PageTitle title={`Expenses`} />
-
-        <div className="grid gap-3">
-          {expenseList?.map((e) => {
-            return (
-              <div key={e?.id} onClick={() => setShowDetails(e)}>
-                <Card item={e} />
-              </div>
-            );
-          })}
-
-          {(expenseList?.length === 0 || !expenseList) && <div>No data</div>}
-        </div>
+        <PageTitle title={`Expense`} />
+        <List data={expenseList} />
       </DashLayout>
-
-      {showDetails && (
-        <Details data={showDetails} setShowDetails={setShowDetails} />
-      )}
-    </div>
+    </>
   );
 }

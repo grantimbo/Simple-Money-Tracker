@@ -6,6 +6,7 @@ import Button from "./Button";
 import Input from "./Input";
 import PageTitle from "./PageTitle";
 import { Context } from "../support/globalState";
+import Title from "./Title";
 
 const AddItem = ({ setAddItem }) => {
   const ctx = useContext(Context);
@@ -70,11 +71,7 @@ const AddItem = ({ setAddItem }) => {
 
   return (
     <>
-      <Head>
-        <title>
-          Add {method === 0 ? "Expense" : "Income"} | Simple Money Tracker
-        </title>
-      </Head>
+      <Title title={method === 0 ? "Add Expense" : "Add Income"} />
 
       <PageTitle title={`Add ${method === 0 ? "Expense" : "Income"}`} />
 

@@ -12,14 +12,14 @@ export default function DashLayout({ children }) {
       return;
     }
 
-    if (!loggedIn) {
+    if (loggedIn === false) {
       Router.push("/login");
     }
   }, []);
 
   return (
     <>
-      {profile === 0 || loggedIn === false ? (
+      {profile === 0 || loggedIn === null ? (
         <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center">
           <h1 className="text-3xl font-medium">Loading...</h1>
         </div>

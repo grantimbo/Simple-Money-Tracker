@@ -1,7 +1,6 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import { Context } from "../../support/globalState";
-import Head from "next/head";
 import DashLayout from "../../components/DashLayout";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
@@ -9,6 +8,7 @@ import BackHomeLink from "../../components/BackHomeLink";
 import PageTitle from "../../components/PageTitle";
 import SelectCurrency from "../../components/Settings/SelectCurrency";
 import Categories from "../../components/Settings/Categories";
+import Title from "../../components/Title";
 
 const Settings = () => {
   const ctx = useContext(Context);
@@ -39,14 +39,11 @@ const Settings = () => {
   };
 
   return (
-    <div>
-      <Head>
-        <title>Settings | Simple Money Tracker</title>
-      </Head>
+    <>
+      <Title title="Settings" />
 
       <DashLayout>
         <BackHomeLink />
-
         <PageTitle title="Settings" />
 
         <section className="grid max-w-xs mb-16">
@@ -70,10 +67,9 @@ const Settings = () => {
         </section>
 
         <PageTitle title="Categories" />
-
         <Categories />
       </DashLayout>
-    </div>
+    </>
   );
 };
 

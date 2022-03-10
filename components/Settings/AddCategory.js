@@ -28,6 +28,12 @@ export default function AddCategory({ setAddCategoryModal }) {
 
     if (category === "expense") {
       const ExpenseCategory = ctx?.profile?.category?.expense || [];
+      const checkIfExist = ExpenseCategory.find((e) => e.name === name);
+
+      if (checkIfExist) {
+        ctx?.notify("error", "Category already exist");
+        return;
+      }
 
       ExpenseCategory.push({
         name: name,
@@ -43,6 +49,12 @@ export default function AddCategory({ setAddCategoryModal }) {
       };
     } else {
       const IncomeCategory = ctx?.profile?.category?.income || [];
+      const checkIfExist = IncomeCategory.find((e) => e.name === name);
+
+      if (checkIfExist) {
+        ctx?.notify("error", "Category already exist");
+        return;
+      }
 
       IncomeCategory.push({
         name: name,

@@ -18,7 +18,7 @@ export class GlobalStateProvider extends React.Component {
   state = {
     profile: 0,
     notifications: [],
-    loggedIn: false,
+    loggedIn: null,
   };
 
   set(key, val) {
