@@ -44,7 +44,7 @@ const Notification = () => {
         let snapshot = [...ctx.notifications];
         snapshot.shift();
         ctx.set("notifications", snapshot);
-      }, 3000);
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [ctx?.notifications]);

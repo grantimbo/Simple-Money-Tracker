@@ -1,11 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="470" height="470" viewBox="0 0 470 470">
   <defs>
     <style>
-      .cls-1 {
-        fill: #cfdcbc;
-      }
-
-      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+      .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
         fill-rule: evenodd;
       }
 
@@ -36,7 +32,6 @@
   </defs>
   <g id="Artboard_1" data-name="Artboard 1">
     <g>
-      <path class="cls-1" d="M235,382.19c128.13,0,232,16.3,232,36.405S363.13,455,235,455,3,438.7,3,418.6,106.87,382.19,235,382.19Z"/>
       <path id="Rectangle_1_copy" data-name="Rectangle 1 copy" class="cls-2" d="M81.363,78.422H364.685a43,43,0,0,1,43,43V362.075a43,43,0,0,1-43,43H81.363a43,43,0,0,1-43-43V121.422A43,43,0,0,1,81.363,78.422Z"/>
       <path class="cls-3" d="M91.657,175.008l-8.549-47.7,284-75.109,16.661,108.4Z"/>
       <path class="cls-4" d="M347.359,178.284L306.679,16,58.139,119.112l22.492,85.179Z"/>

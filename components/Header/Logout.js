@@ -1,7 +1,7 @@
 import { getAuth, signOut } from "firebase/auth";
 import Router from "next/router";
 import { useContext } from "react";
-import { Context } from "../support/globalState";
+import { Context } from "../../support/globalState";
 
 const LogOut = () => {
   const ctx = useContext(Context);

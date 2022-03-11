@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useContext } from "react";
-import { Context } from "../support/globalState";
-import Button from "./Button";
+import { Context } from "../../support/globalState";
+import Button from "../Button";
 import LogOut from "./Logout";
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
   const [dropdown, showDropdown] = useState(false);
   return (
     <header>
-      <nav className="flex items-center justify-between flex-wrap bg-gray-50 h-16 px-4 border-b">
+      <nav className="flex items-center justify-between flex-wrap bg-white h-16 px-4 shadow-sm">
         <Link href={`/dash`}>
           <a className="text-2xl font-medium cursor-pointer">
             Simple Money Tracker
@@ -29,7 +29,7 @@ const Header = () => {
 
       {dropdown && (
         <>
-          <div className="bg-gray-50 fixed top-[53px] shadow-xl shadow-gray-300 right-3 border z-50 rounded-lg grid text-lg fade-in">
+          <div className="bg-white fixed top-[53px] shadow-xl shadow-gray-300 right-3 border z-50 rounded-lg grid text-lg fade-in">
             <Link href="/dash/settings">
               <a className="border-b px-4 py-2 flex items-center space-x-2">
                 <span className="material-icons-round text-[1.1rem]">

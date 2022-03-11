@@ -13,10 +13,10 @@ const Card = (props) => {
   const { item } = props;
   return (
     <div
-      className="bg-gray-50 border rounded-lg px-4 py-2 cursor-pointer fade-in"
+      className="bg-white rounded-lg shadow-sm px-4 py-2 cursor-pointer fade-in"
       key={item?.id}
     >
-      <div className="text-md border-b pb-1 flex items-center justify-between text-gray-400">
+      <div className="text-md border-b border-gray-100 pb-1 flex items-center justify-between text-gray-400">
         <span>{item?.date}</span>
         <span>
           {`${

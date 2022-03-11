@@ -20,7 +20,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Round"
           />
         </Head>
-        <body className="font-sans text-teal-900 bg-white">
+        <body className="font-sans text-teal-900 bg-gray-100">
           <Main />
           <NextScript />
         </body>

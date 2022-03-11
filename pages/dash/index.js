@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { Context } from "../../support/globalState";
 import Overview from "../../components/Overview";
-import Head from "next/head";
 import DashLayout from "../../components/DashLayout";
-import AddItemButton from "../../components/AddItemButton";
+import AddItemButton from "../../components/AddItem/AddItemButton";
 import List from "../../components/List";
 import Title from "../../components/Title";
+import DateSelector from "../../components/DateSelector";
 
 export default function Home() {
   const ctx = useContext(Context);
@@ -18,7 +18,10 @@ export default function Home() {
       <Title title="Dashboard" />
       <DashLayout>
         <Overview />
-        <AddItemButton />
+        <div className="my-8 flex items-center justify-between">
+          <AddItemButton />
+          <DateSelector />
+        </div>
         <List data={allList} />
       </DashLayout>
     </>

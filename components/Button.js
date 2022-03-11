@@ -10,7 +10,7 @@ const Button = (props) => {
   return (
     <button
       onClick={onClick}
-      className={` hover:bg-opacity-80 px-5 py-2 space-x-2 cursor-pointer rounded-full text-center text-lg justify-center inline-flex red-center ${
+      className={` hover:bg-opacity-80 px-5 py-2 space-x-2 cursor-pointer rounded-full text-center text-lg justify-center inline-flex items-center red-center ${
         colors[color] || colors["green"]
       } ${additionalClasses}`}
     >

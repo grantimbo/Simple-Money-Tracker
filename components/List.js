@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
-import Details from "../components/Details";
+import EditItemModal from "../components/EditItem/EditItemModal";
 
 const List = ({ data }) => {
   const [showDetails, setShowDetails] = useState(null);
@@ -17,12 +17,14 @@ const List = ({ data }) => {
           );
         })}
 
-        {(data?.length === 0 || !data) && <div>No data</div>}
+        {(data?.length === 0 || !data) && (
+          <div className="px-8 py-4 bg-white rounded-lg shadow-sm">No data</div>
+        )}
       </div>
 
       {showDetails && (
         <Modal onClose={() => setShowDetails()}>
-          <Details data={showDetails} setShowDetails={setShowDetails} />
+          <EditItemModal data={showDetails} setShowDetails={setShowDetails} />
         </Modal>
       )}
     </>

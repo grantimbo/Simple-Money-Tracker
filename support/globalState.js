@@ -72,6 +72,7 @@ export class GlobalStateProvider extends React.Component {
           notify: (kind, msg) => this.notify(kind, msg),
         })}
       >
+        {console.log(this.state)}
         {this.props.children}
       </Context.Provider>
     );

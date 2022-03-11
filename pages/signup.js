@@ -15,6 +15,13 @@ const SignUp = () => {
   const auth = getAuth();
   const db = getFirestore();
 
+  useEffect(() => {
+    console.log(ctx);
+    if (ctx.loggedIn == true) {
+      Router.push("/dash");
+    }
+  }, [ctx?.loggedIn]);
+
   const createAccount = () => {
     if (!email || !password) {
       ctx.notify("success", "Please enter an email and password");
@@ -28,9 +35,21 @@ const SignUp = () => {
 
         const addDataToFirebase = async () => {
           await setDoc(doc(db, "users", user.uid), {
-            name: "Los Angeles",
-            state: "CA",
-            country: "USA",
+            account: {
+              name: "",
+              currency: "$",
+              activeDate: `${new Date().getMonth()}_${new Date().getFullYear()}`,
+            },
+            category: {
+              expense: [],
+              income: [],
+            },
+            data: [],
+            total: {
+              expense: 0,
+              income: 0,
+              balance: 0,
+            },
           });
 
           Router.push("/dash");

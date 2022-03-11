@@ -14,10 +14,10 @@ const Login = () => {
 
   useEffect(() => {
     console.log(ctx);
-    if (ctx.loggedIn === true) {
+    if (ctx.loggedIn == true) {
       Router.push("/dash");
     }
-  }, []);
+  }, [ctx?.loggedIn]);
 
   const handleLogIn = () => {
     console.log("Logging in...");

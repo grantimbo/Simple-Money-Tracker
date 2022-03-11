@@ -8,14 +8,10 @@ export default function DashLayout({ children }) {
   const { profile, loggedIn } = ctx;
 
   useEffect(() => {
-    if (!ctx) {
-      return;
-    }
-
-    if (loggedIn === false) {
+    if (loggedIn == false) {
       Router.push("/login");
     }
-  }, []);
+  }, [ctx.loggedIn]);
 
   return (
     <>

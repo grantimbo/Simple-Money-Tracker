@@ -25,6 +25,7 @@ const Settings = () => {
     const tmpData = {
       ...ctx?.profile,
       account: {
+        ...ctx.profile.account,
         name: name,
         currency: currency,
       },
