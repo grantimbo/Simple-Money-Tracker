@@ -10,7 +10,7 @@ export default function DashLayout({ children }) {
 
   useEffect(() => {
     if (loggedIn == false) {
-      if (profile === null) {
+      if (profile === 0) {
         Router.push("/login");
       }
     }
