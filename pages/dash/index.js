@@ -9,9 +9,7 @@ import DateSelector from "../../components/DateSelector";
 
 export default function Home() {
   const ctx = useContext(Context);
-  const allList = ctx?.profile?.data || [];
-
-  console.log(ctx);
+  const allList = ctx?.data || [];
 
   return (
     <>

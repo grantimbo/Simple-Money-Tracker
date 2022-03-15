@@ -9,15 +9,13 @@ import Title from "../components/Title";
 
 const Login = () => {
   const ctx = useContext(Context);
+  const { loggedIn } = ctx;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    console.log(ctx);
-    if (ctx.loggedIn == true) {
-      Router.push("/dash");
-    }
-  }, [ctx?.loggedIn]);
+    loggedIn && Router.push("/dash");
+  }, [loggedIn]);
 
   const handleLogIn = () => {
     console.log("Logging in...");

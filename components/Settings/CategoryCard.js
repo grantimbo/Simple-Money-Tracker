@@ -1,4 +1,4 @@
-const CategoryCard = ({ title, catList }) => {
+const CategoryCard = ({ title, catList, setEditCategoryModal }) => {
   return (
     <div>
       <h2 className="text-gray-400 text-md mb-1">{title}</h2>
@@ -7,7 +7,7 @@ const CategoryCard = ({ title, catList }) => {
           return (
             <div
               key={cat?.name}
-              // onClick={() => setEditCategoryModal(cat)}
+              onClick={() => setEditCategoryModal(cat)}
               className={`bg-gray-50 border rounded-full py-2 px-4 text-sm flex items-center  space-x-2 text-gray-600 cursor-pointer`}
             >
               {cat?.icon && (

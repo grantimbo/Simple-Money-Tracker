@@ -9,9 +9,7 @@ import Title from "../../components/Title";
 export default function Income() {
   const ctx = useContext(Context);
 
-  const incomeList = ctx?.profile?.data?.filter(
-    (item) => item.method == "income"
-  );
+  const incomeList = ctx?.data?.filter((item) => item.method == 1);
 
   return (
     <>

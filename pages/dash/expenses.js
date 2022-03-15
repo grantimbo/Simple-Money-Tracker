@@ -9,9 +9,7 @@ import Title from "../../components/Title";
 export default function Expenses() {
   const ctx = useContext(Context);
 
-  const expenseList = ctx?.profile?.data?.filter(
-    (item) => item.method == "expense"
-  );
+  const expenseList = ctx?.data?.filter((item) => item.method == 0);
 
   return (
     <>

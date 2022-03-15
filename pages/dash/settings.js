@@ -13,8 +13,8 @@ import Title from "../../components/Title";
 const Settings = () => {
   const ctx = useContext(Context);
 
-  const [name, setName] = useState(ctx?.profile?.account?.name);
-  const [currency, setCurrency] = useState(ctx?.profile?.account?.currency);
+  const [name, setName] = useState(ctx?.profile?.name || "");
+  const [currency, setCurrency] = useState(ctx?.profile?.currency || "$");
 
   const saveInfo = async () => {
     if (!currency) {
@@ -23,12 +23,9 @@ const Settings = () => {
     }
 
     const tmpData = {
-      ...ctx?.profile,
-      account: {
-        ...ctx.profile.account,
-        name: name,
-        currency: currency,
-      },
+      ...ctx.profile,
+      name: name,
+      currency: currency,
     };
 
     // Add a new document in collection "cities"

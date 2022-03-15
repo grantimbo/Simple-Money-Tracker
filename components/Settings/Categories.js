@@ -11,14 +11,22 @@ const EditCategories = () => {
   const [addCategoryModal, setAddCategoryModal] = useState(false);
   const [editCategoryModal, setEditCategoryModal] = useState(null);
 
-  const income = ctx?.profile?.category?.income || [];
-  const expense = ctx?.profile?.category?.expense || [];
+  const expense = ctx?.profile?.categories?.filter((e) => e.method == 0);
+  const income = ctx?.profile?.categories?.filter((i) => i.method == 1);
 
   return (
     <>
       <section className="grid grid-cols-2 gap-2 w-8/12 mb-6">
-        <CategoryCard title={`Expenses`} catList={expense} />
-        <CategoryCard title={`Income`} catList={income} />
+        <CategoryCard
+          title={`Expenses`}
+          catList={expense}
+          setEditCategoryModal={setEditCategoryModal}
+        />
+        <CategoryCard
+          title={`Income`}
+          catList={income}
+          setEditCategoryModal={setEditCategoryModal}
+        />
       </section>
 
       <Button

@@ -14,59 +14,47 @@ import Input from "../Input";
 export default function EditCategory({ data, setEditCategoryModal }) {
   const ctx = useContext(Context);
 
-  console.log(data?.name);
-
   const [name, setName] = useState(data?.name);
-  const [icon, setIcon] = useState(data?.category);
-  const [category, setCategory] = useState(data?.category);
+  const [icon, setIcon] = useState(data?.icon);
+  const [method, setMethod] = useState(data?.method);
 
-  const addCategory = async () => {
-    if (!icon || !name || !category) {
-      ctx?.notify("error", "Please fill the empty fields");
-      return;
-    }
+  const deleteCategory = async () => {
+    const tmpCategories = [].concat(ctx?.profile?.categories || []);
 
-    let tmpData = null;
+    const tmpData = {
+      ...ctx?.profile,
+      categories: tmpCategories.filter((e) => e?.id != data?.id),
+    };
 
-    if (category === "expense") {
-      const ExpenseCategory = ctx?.profile?.category?.expense;
-
-      // const tae = ExpenseCategory.find((e) => e.id == id)
-
-      ExpenseCategory.push({
-        name: name,
-        icon: icon,
-      });
-
-      tmpData = {
-        category: {
-          expense: ExpenseCategory,
-          income: ctx?.profile?.category?.income || [],
-        },
-        ...ctx?.profile,
-      };
-    } else {
-      const IncomeCategory = ctx?.profile?.category?.income || [];
-
-      IncomeCategory.push({
-        name: name,
-        icon: icon,
-      });
-
-      tmpData = {
-        category: {
-          expense: ctx?.profile?.category?.expense || [],
-          income: IncomeCategory,
-        },
-        ...ctx?.profile,
-      };
-    }
-
-    // Add a new document in collection
     const db = getFirestore();
     await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
-      ctx?.notify("success", "Category successfully added");
-      setEditCategoryModal(false);
+      ctx?.notify("success", "Category successfully deleted");
+      setEditCategoryModal(null);
+    });
+  };
+
+  const updateCategory = async () => {
+    const tmpCategories = [].concat(ctx?.profile?.categories || []);
+
+    const tmpData = {
+      ...ctx?.profile,
+      categories: tmpCategories.map((e) => {
+        if (e?.id == data?.id) {
+          return {
+            ...e,
+            name: name,
+            icon: icon,
+            method: method,
+          };
+        }
+        return e;
+      }),
+    };
+
+    const db = getFirestore();
+    await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
+      ctx?.notify("success", "Category successfully updated");
+      setEditCategoryModal(null);
     });
   };
 
@@ -87,9 +75,9 @@ export default function EditCategory({ data, setEditCategoryModal }) {
           <p className="text-gray-400 text-md mb-1">Category</p>
           <div className="flex space-x-2 mb-4">
             <div
-              onClick={() => setCategory("expense")}
+              onClick={() => setMethod(0)}
               className={`${
-                category === "expense"
+                method === 0
                   ? "bg-lime-500 text-white"
                   : "bg-lime-100 text-lime-700 border-lime-400 border-2"
               } px-4 py-1 rounded-full cursor-pointer`}
@@ -97,9 +85,9 @@ export default function EditCategory({ data, setEditCategoryModal }) {
               Expense
             </div>
             <div
-              onClick={() => setCategory("income")}
+              onClick={() => setMethod(1)}
               className={`${
-                category === "income"
+                method === 1
                   ? "bg-lime-500 text-white"
                   : "bg-lime-100 text-lime-500 border-lime-400 border-2"
               } px-4 py-1 rounded-full cursor-pointer`}
@@ -128,11 +116,21 @@ export default function EditCategory({ data, setEditCategoryModal }) {
               ))}
             </div>
           </div>
-          <Button
-            onClick={() => addCategory()}
-            text="Save Category"
-            icon="save"
-          ></Button>
+
+          <div className="flex items-center justify-end space-x-2">
+            <Button
+              onClick={() => deleteCategory()}
+              text="Delete"
+              color="red"
+              icon="delete"
+            />
+
+            <Button
+              onClick={() => updateCategory()}
+              text="Update"
+              icon="save"
+            />
+          </div>
         </div>
       </div>
     </main>

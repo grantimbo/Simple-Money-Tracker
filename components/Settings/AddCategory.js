@@ -1,76 +1,45 @@
-import Head from "next/head";
-import Link from "next/link";
 import { useState, useContext, useEffect } from "react";
-import Router from "next/router";
-import DashLayout from "../DashLayout";
-import Header from "../Header";
 import { Context } from "../../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Button from "../Button";
-
 import { categoryIcons } from "../../support/categoryIcons";
 import Input from "../Input";
 
 export default function AddCategory({ setAddCategoryModal }) {
   const ctx = useContext(Context);
 
+  const [method, setMethod] = useState(null);
   const [name, setName] = useState(null);
   const [icon, setIcon] = useState(null);
-  const [category, setCategory] = useState("expense");
 
-  const addCategory = async () => {
-    if (!icon || !name || !category) {
+  const saveCategory = async () => {
+    //check for erors
+    if (!name || !icon || method === null) {
       ctx?.notify("error", "Please fill the empty fields");
       return;
     }
 
-    let tmpData = null;
-
-    if (category === "expense") {
-      const ExpenseCategory = ctx?.profile?.category?.expense || [];
-      const checkIfExist = ExpenseCategory.find((e) => e.name === name);
-
-      if (checkIfExist) {
-        ctx?.notify("error", "Category already exist");
-        return;
-      }
-
-      ExpenseCategory.push({
-        name: name,
-        icon: icon,
-      });
-
-      tmpData = {
-        category: {
-          expense: ExpenseCategory,
-          income: ctx?.profile?.category?.income || [],
-        },
-        ...ctx?.profile,
-      };
-    } else {
-      const IncomeCategory = ctx?.profile?.category?.income || [];
-      const checkIfExist = IncomeCategory.find((e) => e.name === name);
-
-      if (checkIfExist) {
-        ctx?.notify("error", "Category already exist");
-        return;
-      }
-
-      IncomeCategory.push({
-        name: name,
-        icon: icon,
-      });
-
-      tmpData = {
-        category: {
-          expense: ctx?.profile?.category?.expense || [],
-          income: IncomeCategory,
-        },
-        ...ctx?.profile,
-      };
+    //  check for duplicates
+    const tmpCategories = [].concat(ctx?.profile?.categories || []);
+    if (tmpCategories?.find((e) => e?.name === name)) {
+      ctx?.notify("error", "Category already exist");
+      return;
     }
 
-    // Add a new document in collection
+    // push new items
+    tmpCategories.push({
+      id: `${Date.now()}`,
+      name: name,
+      icon: icon,
+      method: method,
+    });
+
+    // update profile
+    const tmpData = {
+      ...ctx?.profile,
+      categories: tmpCategories,
+    };
+
     const db = getFirestore();
     await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
       ctx?.notify("success", "Category successfully added");
@@ -95,9 +64,9 @@ export default function AddCategory({ setAddCategoryModal }) {
           <p className="text-gray-400 text-md mb-1">Category</p>
           <div className="flex space-x-2 mb-4">
             <div
-              onClick={() => setCategory("expense")}
+              onClick={() => setMethod(0)}
               className={`${
-                category === "expense"
+                method === 0
                   ? "bg-lime-500 text-white"
                   : "bg-lime-100 text-lime-700 border-lime-400 border-2"
               } px-4 py-1 rounded-full cursor-pointer`}
@@ -105,9 +74,9 @@ export default function AddCategory({ setAddCategoryModal }) {
               Expense
             </div>
             <div
-              onClick={() => setCategory("income")}
+              onClick={() => setMethod(1)}
               className={`${
-                category === "income"
+                method === 1
                   ? "bg-lime-500 text-white"
                   : "bg-lime-100 text-lime-500 border-lime-400 border-2"
               } px-4 py-1 rounded-full cursor-pointer`}
@@ -139,7 +108,7 @@ export default function AddCategory({ setAddCategoryModal }) {
           </div>
 
           <Button
-            onClick={() => addCategory()}
+            onClick={() => saveCategory()}
             text="Save Category"
             icon="save"
           ></Button>

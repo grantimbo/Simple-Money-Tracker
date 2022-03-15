@@ -5,10 +5,8 @@ import TotalCard from "./TotalCard";
 export default function Overview() {
   const ctx = useContext(Context);
   const {
-    profile: {
-      account: { currency },
-      total,
-    },
+    total,
+    profile: { currency },
   } = ctx;
 
   return (

@@ -20,9 +20,7 @@ const Header = () => {
           className="flex items-center space-x-2 cursor-pointer"
           onClick={() => (!dropdown ? showDropdown(true) : showDropdown(false))}
         >
-          {ctx?.profile?.account?.name && (
-            <span>{ctx?.profile?.account?.name}</span>
-          )}
+          {ctx?.profile?.name && <span>{ctx?.profile?.name}</span>}
           <span className="material-icons-round text-3xl">account_circle</span>
         </div>
       </nav>

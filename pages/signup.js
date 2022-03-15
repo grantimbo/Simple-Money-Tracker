@@ -7,20 +7,19 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import ButtonLink from "../components/ButtonLink";
 import Title from "../components/Title";
+import Loading from "../components/Loading";
 
 const SignUp = () => {
   const ctx = useContext(Context);
+  const { loggedIn } = ctx;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
   const db = getFirestore();
 
   useEffect(() => {
-    console.log(ctx);
-    if (ctx.loggedIn == true) {
-      Router.push("/dash");
-    }
-  }, [ctx?.loggedIn]);
+    loggedIn && Router.push("/dash");
+  }, [loggedIn]);
 
   const createAccount = () => {
     if (!email || !password) {
@@ -35,21 +34,10 @@ const SignUp = () => {
 
         const addDataToFirebase = async () => {
           await setDoc(doc(db, "users", user.uid), {
-            account: {
-              name: "",
-              currency: "$",
-              activeDate: `${new Date().getMonth()}_${new Date().getFullYear()}`,
-            },
-            category: {
-              expense: [],
-              income: [],
-            },
-            data: [],
-            total: {
-              expense: 0,
-              income: 0,
-              balance: 0,
-            },
+            name: "",
+            currency: "$",
+            activeDate: `${new Date().getMonth()}_${new Date().getFullYear()}`,
+            categories: [],
           });
 
           Router.push("/dash");

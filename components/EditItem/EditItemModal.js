@@ -6,7 +6,7 @@ import Input from "../Input";
 
 const Details = ({ data, setShowDetails }) => {
   const ctx = useContext(Context);
-  const { uid, set, notify, monthData } = ctx;
+  const { uid, set, notify, monthData, profile } = ctx;
 
   // firebase reference
   const db = getFirestore();
@@ -17,9 +17,11 @@ const Details = ({ data, setShowDetails }) => {
   const [date, setDate] = useState(data?.date);
   const [note, setNote] = useState(data?.note);
 
+  const category = profile?.categories?.find((e) => e?.id === data?.category);
+
   let tmpIncome = 0;
   let tmpExpense = 0;
-  const tmpItems = [].concat(ctx?.data) || [];
+  const tmpItems = [].concat(ctx?.data || []);
 
   const deleteItem = async (id) => {
     const newList = tmpItems.filter((item) => item.id !== id);
@@ -94,9 +96,9 @@ const Details = ({ data, setShowDetails }) => {
   return (
     <>
       <div className="font-medium border-b border-gray-200 pb-2 mb-4 flex items-center space-x-2">
-        <span className="material-icons-round">{data?.category?.icon}</span>
+        <span className="material-icons-round">{category?.icon}</span>
         <span className="text-2xl capitalize">
-          {data?.category?.name ? data?.category?.name : data?.method}
+          {category?.name ? category?.name : data?.method}
         </span>
       </div>
 

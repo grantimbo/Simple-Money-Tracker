@@ -26,17 +26,14 @@ const AddItem = ({ setAddItem }) => {
 
     let tmpIncome = 0;
     let tmpExpense = 0;
-    const tmpItems = [].concat(ctx?.data) || [];
+    const tmpItems = [].concat(ctx?.data || []);
 
     // add new data
     tmpItems.push({
       id: `${Date.now()}`,
-      category: {
-        name: category?.name,
-        icon: category?.icon,
-      },
+      category: category,
       value: value,
-      date: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+      date: Date.now(),
       note: note,
       method: method,
     });
