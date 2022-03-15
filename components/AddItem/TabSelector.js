@@ -2,9 +2,9 @@ const TabSelector = ({ method, setMethod }) => {
   return (
     <div className="border-b-2 border-lime-400 flex space-x-1">
       <div
-        onClick={() => setMethod("expense")}
+        onClick={() => setMethod(0)}
         className={`${
-          method === "expense"
+          method === 0
             ? "bg-lime-500 text-white"
             : "bg-lime-100 text-lime-700 border-lime-400 border-2"
         } px-4 py-1 border-b-0 rounded-t-xl cursor-pointer`}
@@ -12,9 +12,9 @@ const TabSelector = ({ method, setMethod }) => {
         Expense
       </div>
       <div
-        onClick={() => setMethod("income")}
+        onClick={() => setMethod(1)}
         className={`${
-          method === "income"
+          method === 1
             ? "bg-lime-500 text-white"
             : "bg-lime-100 text-lime-500 border-lime-400 border-2"
         } px-4 py-1 border-b-0 rounded-t-xl cursor-pointer`}

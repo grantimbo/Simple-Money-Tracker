@@ -1,42 +1,24 @@
-import { useState, useContext, useEffect } from "react";
-import Router from "next/router";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
+import { useState, useContext } from "react";
+import { Context } from "../../support/globalState";
+import { doc, setDoc, collection, getFirestore } from "firebase/firestore";
 import Button from "../Button";
 import Input from "../Input";
 import PageTitle from "../PageTitle";
-import { Context } from "../../support/globalState";
 import Title from "../Title";
 import TabSelector from "./TabSelector";
+import CategorySelector from "./CategorySelector";
 
 const AddItem = ({ setAddItem }) => {
   const ctx = useContext(Context);
-  const [catList, setCatList] = useState(null);
-  const [method, setMethod] = useState("expense");
+  const { uid, set, notify, monthData, profile } = ctx;
+
+  const [method, setMethod] = useState(0);
   const [category, setCategory] = useState(null);
-  const [categoryIcon, setCategoryIcon] = useState(null);
   const [value, setValue] = useState(0);
   const [note, setNote] = useState("");
 
-  const currencySign = ctx?.profile?.account?.currency || "$";
-
-  // create array of categories
-  const ExpenseCategory = ctx?.profile?.category?.expense;
-  const IncomeCategory = ctx?.profile?.category?.income;
-  const IncomeExpenseList = ctx.profile.data || [];
-
-  useEffect(() => {
-    if (method === "expense") {
-      setCategory(ExpenseCategory?.[0]?.name);
-      setCategoryIcon(ExpenseCategory?.[0]?.icon);
-      setCatList(ExpenseCategory);
-    } else {
-      setCategory(IncomeCategory?.[0]?.name);
-      setCategoryIcon(IncomeCategory?.[0]?.icon);
-      setCatList(IncomeCategory);
-    }
-  }, [method]);
-
   const saveItem = async () => {
+    // check for erors
     if (!category || value <= 0) {
       ctx.notify("error", "Please fill all the fields");
       return;
@@ -44,12 +26,14 @@ const AddItem = ({ setAddItem }) => {
 
     let tmpIncome = 0;
     let tmpExpense = 0;
+    const tmpItems = [].concat(ctx?.data) || [];
 
-    IncomeExpenseList.push({
+    // add new data
+    tmpItems.push({
       id: `${Date.now()}`,
       category: {
-        name: category,
-        icon: categoryIcon,
+        name: category?.name,
+        icon: category?.icon,
       },
       value: value,
       date: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
@@ -57,29 +41,33 @@ const AddItem = ({ setAddItem }) => {
       method: method,
     });
 
-    IncomeExpenseList.forEach((e) => {
-      e.method == "expense"
+    // calculate total
+    tmpItems.forEach((e) => {
+      e.method == 0
         ? (tmpExpense += parseFloat(e.value))
         : (tmpIncome += parseFloat(e.value));
     });
 
-    const tmpData = {
-      ...ctx?.profile,
-      data: IncomeExpenseList,
-      total: {
-        income: tmpIncome,
-        expense: tmpExpense,
-        balance: tmpIncome - tmpExpense,
-      },
+    const total = {
+      income: tmpIncome,
+      expense: tmpExpense,
+      balance: tmpIncome - tmpExpense,
     };
 
-    // Add a new document in collection "cities"
+    // final data
+    const finalData = {
+      data: tmpItems,
+      total: total,
+    };
+
+    // save to firebase
     const db = getFirestore();
-    await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
-      // add data to database
-      setAddItem && setAddItem(false);
-      ctx?.notify("success", "Item added successfully");
-      Router.push("/dash");
+    const dataRef = collection(db, `users/${uid}/data`);
+    await setDoc(doc(dataRef, monthData), finalData).then(() => {
+      set("data", tmpItems);
+      set("total", total);
+      notify("success", "Item added successfully");
+      setAddItem(false);
     });
   };
 
@@ -96,7 +84,7 @@ const AddItem = ({ setAddItem }) => {
             color={`gray`}
             type={`number`}
             setValue={setValue}
-            placeholder={`${currencySign}0.00`}
+            placeholder={`${profile?.account?.currency || "$"}0.00`}
             additionalClasses="mb-5"
           />
 
@@ -105,33 +93,18 @@ const AddItem = ({ setAddItem }) => {
             color={`gray`}
             type={`text`}
             setValue={setNote}
-            placeholder={`Say something about this ${
+            placeholder={`Notes for this ${
               method === 0 ? "expense" : "income"
             }`}
             additionalClasses="mb-4"
           />
 
           <p className="text-gray-400 text-md mb-1">Category</p>
-          <div className="grid grid-cols-3 gap-2 mb-6">
-            {catList?.map((cat) => {
-              return (
-                <div
-                  onClick={() => setCategory(cat?.name)}
-                  key={cat?.name}
-                  className={`${
-                    cat?.name === category
-                      ? "bg-lime-200 border-lime-500 text-lime-600 "
-                      : "bg-gray-50 text-gray-500"
-                  }  border-2 rounded-full px-4 py-2 cursor-pointer flex items-center justify-center space-x-2 text-sm`}
-                >
-                  {cat?.icon && (
-                    <span className="material-icons-round">{cat?.icon}</span>
-                  )}
-                  <span>{cat?.name}</span>
-                </div>
-              );
-            })}
-          </div>
+          <CategorySelector
+            method={method}
+            category={category}
+            setCategory={setCategory}
+          />
 
           <Button
             onClick={() => saveItem()}
