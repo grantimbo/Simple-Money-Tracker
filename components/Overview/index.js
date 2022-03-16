@@ -10,19 +10,19 @@ export default function Overview() {
   } = ctx;
 
   return (
-    <div className="w-full grid grid-cols-3 gap-5 mt-6">
-      <TotalCard
-        currency={currency}
-        name="Income"
-        link="/dash/income"
-        data={total?.income}
-      />
-
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-6">
       <TotalCard
         currency={currency}
         name="Expenses"
         link="/dash/expenses"
         data={total?.expense}
+      />
+
+      <TotalCard
+        currency={currency}
+        name="Income"
+        link="/dash/income"
+        data={total?.income}
       />
 
       <TotalCard
