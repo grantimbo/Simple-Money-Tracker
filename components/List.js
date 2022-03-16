@@ -2,6 +2,7 @@ import { useState } from "react";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
 import EditItemModal from "../components/EditItem/EditItemModal";
+import NoData from "../components/NoData";
 
 const List = ({ data }) => {
   const [showDetails, setShowDetails] = useState(null);
@@ -17,9 +18,7 @@ const List = ({ data }) => {
           );
         })}
 
-        {(data?.length === 0 || !data) && (
-          <div className="px-8 py-4 bg-white rounded-lg shadow-sm">No data</div>
-        )}
+        {(data?.length === 0 || !data) && <NoData />}
       </div>
 
       {showDetails && (

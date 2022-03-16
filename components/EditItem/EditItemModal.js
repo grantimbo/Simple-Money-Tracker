@@ -17,8 +17,6 @@ const Details = ({ data, setShowDetails }) => {
   const [date, setDate] = useState(data?.date);
   const [note, setNote] = useState(data?.note);
 
-  const category = profile?.categories?.find((e) => e?.id === data?.category);
-
   let tmpIncome = 0;
   let tmpExpense = 0;
   const tmpItems = [].concat(ctx?.data || []);
@@ -42,7 +40,7 @@ const Details = ({ data, setShowDetails }) => {
 
     // final data
     const finalData = {
-      data: tmpItems,
+      data: newList,
       total: total,
     };
 
@@ -96,9 +94,18 @@ const Details = ({ data, setShowDetails }) => {
   return (
     <>
       <div className="font-medium border-b border-gray-200 pb-2 mb-4 flex items-center space-x-2">
-        <span className="material-icons-round">{category?.icon}</span>
+        <span className="material-icons-round">
+          {data?.category?.icon && <>{data?.category?.icon}</>}
+          {!data?.category?.name && (
+            <>{data?.method == 0 ? "receipt" : "account_balance_wallet"}</>
+          )}
+        </span>
+
         <span className="text-2xl capitalize">
-          {category?.name ? category?.name : data?.method}
+          {data?.category?.name && data?.category?.name}
+          {!data?.category?.name && (
+            <>{data?.method == 0 ? " Expense" : " Income"}</>
+          )}
         </span>
       </div>
 
@@ -170,7 +177,7 @@ const Details = ({ data, setShowDetails }) => {
         ) : (
           <>
             <Button
-              onClick={() => deleteItem(data.id)}
+              onClick={() => deleteItem(data?.id)}
               icon="delete_outline"
               color="red"
               text="Delete"

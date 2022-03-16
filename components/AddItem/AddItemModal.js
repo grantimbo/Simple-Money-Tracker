@@ -7,6 +7,7 @@ import PageTitle from "../PageTitle";
 import Title from "../Title";
 import TabSelector from "./TabSelector";
 import CategorySelector from "./CategorySelector";
+import { generateID } from "../../support/generateID";
 
 const AddItem = ({ setAddItem }) => {
   const ctx = useContext(Context);
@@ -30,7 +31,7 @@ const AddItem = ({ setAddItem }) => {
 
     // add new data
     tmpItems.push({
-      id: `${Date.now()}`,
+      id: generateID(),
       category: category,
       value: value,
       date: Date.now(),

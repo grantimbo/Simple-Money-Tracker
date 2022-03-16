@@ -7,7 +7,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import ButtonLink from "../components/ButtonLink";
 import Title from "../components/Title";
-import Loading from "../components/Loading";
+import { generateID } from "../support/generateID";
 
 const SignUp = () => {
   const ctx = useContext(Context);
@@ -36,8 +36,62 @@ const SignUp = () => {
           await setDoc(doc(db, "users", user.uid), {
             name: "",
             currency: "$",
-            activeDate: `${new Date().getMonth()}_${new Date().getFullYear()}`,
-            categories: [],
+            categories: [
+              {
+                icon: "view_agenda",
+                id: generateID(),
+                method: 0,
+                name: "Others",
+              },
+              {
+                icon: "bolt",
+                id: generateID(),
+                method: 0,
+                name: "Bills",
+              },
+              {
+                icon: "restaurant",
+                id: generateID(),
+                method: 0,
+                name: "Food",
+              },
+              {
+                icon: "shopping_basket",
+                id: generateID(),
+                method: 0,
+                name: "Shopping",
+              },
+              {
+                icon: "child_friendly",
+                id: generateID(),
+                method: 0,
+                name: "Baby",
+              },
+              {
+                icon: "health_and_safety",
+                id: generateID(),
+                method: 0,
+                name: "Health",
+              },
+              {
+                icon: "account_balance_wallet",
+                id: generateID(),
+                method: 1,
+                name: "Salary",
+              },
+              {
+                icon: "devices",
+                id: generateID(),
+                method: 1,
+                name: "Freelancing",
+              },
+              {
+                icon: "savings",
+                id: generateID(),
+                method: 1,
+                name: "Investments",
+              },
+            ],
           });
 
           Router.push("/dash");

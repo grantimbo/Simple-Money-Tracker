@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useState, useContext } from "react";
 import { Context } from "../../support/globalState";
-import Button from "../Button";
 import LogOut from "./Logout";
 
 const Header = () => {

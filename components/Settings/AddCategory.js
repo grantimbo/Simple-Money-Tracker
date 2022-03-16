@@ -4,6 +4,7 @@ import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Button from "../Button";
 import { categoryIcons } from "../../support/categoryIcons";
 import Input from "../Input";
+import { generateID } from "../../support/generateID";
 
 export default function AddCategory({ setAddCategoryModal }) {
   const ctx = useContext(Context);
@@ -28,7 +29,7 @@ export default function AddCategory({ setAddCategoryModal }) {
 
     // push new items
     tmpCategories.push({
-      id: `${Date.now()}`,
+      id: generateID(),
       name: name,
       icon: icon,
       method: method,
@@ -68,7 +69,7 @@ export default function AddCategory({ setAddCategoryModal }) {
               className={`${
                 method === 0
                   ? "bg-lime-500 text-white"
-                  : "bg-lime-100 text-lime-700 border-lime-400 border-2"
+                  : "bg-lime-100 text-lime-500 border-lime-400 border-2"
               } px-4 py-1 rounded-full cursor-pointer`}
             >
               Expense

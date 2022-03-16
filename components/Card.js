@@ -10,6 +10,7 @@ const Card = (props) => {
 
   const { item } = props;
   const date = new Date(item.date);
+
   return (
     <div
       className="bg-white rounded-lg shadow-sm px-4 py-2 cursor-pointer fade-in"
@@ -20,6 +21,7 @@ const Card = (props) => {
           {date.toLocaleString("default", {
             month: "short",
             day: "numeric",
+            year: "numeric",
           })}
           {` — `}
           {date.toLocaleString("default", {
