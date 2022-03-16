@@ -1,5 +1,5 @@
 const Button = (props) => {
-  const { onClick, text, icon, additionalClasses, color } = props;
+  const { onClick, text, icon, additionalClasses, color, size } = props;
 
   const colors = {
     green: "text-white bg-lime-500 focus:outline-lime-700",
@@ -7,12 +7,19 @@ const Button = (props) => {
     red: "text-white bg-red-500 focus:outline-red-700",
   };
 
+  const sizes = {
+    sm: "px-5 py-2 text-md",
+    md: "px-5 py-2 text-lg",
+    xl: "px-10 py-3 text-xl",
+    xl: "px-10 py-3 text-2xl",
+  };
+
   return (
     <button
       onClick={onClick}
-      className={` hover:bg-opacity-80 px-5 py-2 space-x-2 cursor-pointer rounded-full text-center text-lg justify-center inline-flex items-center red-center ${
+      className={` hover:bg-opacity-80  space-x-2 cursor-pointer rounded-full text-center  justify-center inline-flex items-center ${
         colors[color] || colors["green"]
-      } ${additionalClasses}`}
+      } ${sizes[size] || sizes["md"]} ${additionalClasses}`}
     >
       {icon && <span className="material-icons-round">{icon}</span>}
       <span>{text}</span>

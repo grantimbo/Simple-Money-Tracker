@@ -23,7 +23,7 @@ const SignUp = () => {
 
   const createAccount = () => {
     if (!email || !password) {
-      ctx.notify("success", "Please enter an email and password");
+      ctx.notify("error", "Please enter an email and password");
       return;
     }
 

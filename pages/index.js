@@ -14,7 +14,12 @@ export default function Home() {
             <p className="text-3xl font-light mb-6">
               Just a super simple money tracker.
             </p>
-            <ButtonLink text="Get Started" href="/dash" icon="navigate_next" />
+            <ButtonLink
+              text="Get Started"
+              href="/dash"
+              icon="navigate_next"
+              size="xl"
+            />
           </div>
         </div>
 

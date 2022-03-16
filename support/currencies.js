@@ -1,4 +1,5 @@
 export const currencies = [
+  { cc: "USD", symbol: "$", name: "United States dollar" },
   { cc: "AED", symbol: "\u062f.\u0625;", name: "UAE dirham" },
   { cc: "AFN", symbol: "Afs", name: "Afghan afghani" },
   { cc: "ALL", symbol: "L", name: "Albanian lek" },
@@ -143,7 +144,6 @@ export const currencies = [
   { cc: "TZS", symbol: "TZS", name: "Tanzanian shilling" },
   { cc: "UAH", symbol: "UAH", name: "Ukrainian hryvnia" },
   { cc: "UGX", symbol: "USh", name: "Ugandan shilling" },
-  { cc: "USD", symbol: "US$", name: "United States dollar" },
   { cc: "UYU", symbol: "$U", name: "Uruguayan peso" },
   { cc: "UZS", symbol: "UZS", name: "Uzbekistani som" },
   { cc: "VEB", symbol: "Bs", name: "Venezuelan bolivar" },

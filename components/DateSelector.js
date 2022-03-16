@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { months } from "../support/months";
 import { Context } from "../support/globalState";
 import { getDoc, doc, getFirestore, collection } from "firebase/firestore";
