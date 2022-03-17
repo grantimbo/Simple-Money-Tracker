@@ -1,6 +1,7 @@
 import { numberWithCommas } from "../support/formatNumber";
 import { Context } from "../support/globalState";
 import { useContext } from "react";
+import { displayDate } from "../support/parseDate";
 
 const Card = (props) => {
   const ctx = useContext(Context);
@@ -23,31 +24,15 @@ const Card = (props) => {
       key={item?.id}
     >
       <div className="font-thin text-xs border-b border-gray-100 pb-1 flex items-center justify-between text-gray-400 md:font-light md:text-sm">
-        <span>
-          {date.toLocaleString("default", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}
-          {` — `}
-          {date.toLocaleString("default", {
-            hour: "numeric",
-            hour12: true,
-            minute: "numeric",
-          })}
-        </span>
-        <span>
-          {`${item?.method == 0 ? "Expenses" : "Income"} : ${numberWithCommas(
-            item?.value
-          )}`}
-        </span>
+        <span>{displayDate(date)}</span>
+        <span>{item?.method == 0 ? "Expenses" : "Income"}</span>
       </div>
       <div
         className="flex items-center justify-between py-1 pb-1 text-sm font-medium md:py-2 md:text-2xl"
         title={`${displayValue()} | ${item?.note}`}
       >
         <span className="flex space-x-1 items-center md:space-x-3">
-          <span className="material-icons-round text-sm md:text-base">
+          <span className="material-icons-round text-sm md:text-2xl">
             {item?.category?.icon}
           </span>
           <div>{item?.note}</div>

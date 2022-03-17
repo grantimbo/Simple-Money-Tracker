@@ -86,10 +86,14 @@ const AddItem = ({ setAddItem }) => {
       });
   };
 
+  const displayMethod = () => {
+    return method == 0 ? "Income" : "Expense";
+  };
+
   return (
     <>
-      <Title title={method === 0 ? "Add Expense" : "Add Income"} />
-      <PageTitle title={method === 0 ? "Add Expense" : "Add Income"} />
+      <Title title={`Add ${displayMethod()}`} />
+      <PageTitle title={`Add ${displayMethod()}`} />
       <TabSelector method={method} setMethod={setMethod} />
 
       <div className="mt-4 grid md:mt-6">
@@ -107,7 +111,7 @@ const AddItem = ({ setAddItem }) => {
           color={`gray`}
           type={`text`}
           setValue={setNote}
-          placeholder={`Notes for this ${method === 0 ? "expense" : "income"}`}
+          placeholder={`Notes for this ${displayMethod().toLowerCase()}`}
           additionalClasses="mb-3 md:mb-6"
         />
 
@@ -121,7 +125,7 @@ const AddItem = ({ setAddItem }) => {
         <Button
           onClick={() => saveItem()}
           icon={`save`}
-          text={method === 0 ? "Save Expense" : "Save Income"}
+          text={`Save ${displayMethod()}`}
           loading={loading}
         />
       </div>

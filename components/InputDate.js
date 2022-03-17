@@ -1,3 +1,5 @@
+import { parseDate } from "../support/parseDate";
+
 const InputDate = (props) => {
   const { placeholder, value, setValue, additionalClasses, color } = props;
 
@@ -9,21 +11,9 @@ const InputDate = (props) => {
   const min = `${y}-${m}-01T00:00`;
   const max = `${y}-${m}-${dy}T00:00`;
 
-  const parseDate = (value) => {
-    const d = new Date(value);
-    const y = d.getFullYear();
-    const m = ("0" + (d.getMonth() + 1)).slice(-2);
-    const dy = d.getDate();
-    const hr = ("0" + d.getHours()).slice(-2);
-    const min = ("0" + d.getMinutes()).slice(-2);
-    return `${y}-${m}-${dy}T${hr}:${min}`;
-  };
-
   return (
     <input
-      id="party"
       type="datetime-local"
-      name="partydate"
       value={parseDate(value)}
       onChange={(e) => setValue(e?.target?.value)}
       min={min}

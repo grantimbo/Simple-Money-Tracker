@@ -25,7 +25,7 @@ export default function Income() {
         <div className="mb-4">
           <TotalCard
             currency={currency}
-            name="Expenses"
+            name="Income"
             link="/dash/expenses"
             data={total?.income}
           />
