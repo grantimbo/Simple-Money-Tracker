@@ -12,8 +12,9 @@ import InputLabel from "../InputLabel";
 
 const AddItem = ({ setAddItem }) => {
   const ctx = useContext(Context);
-  const { uid, set, notify, monthData, profile } = ctx;
+  const { uid, set, notify, activeMonth, profile } = ctx;
 
+  const [loading, setLoading] = useState(null);
   const [method, setMethod] = useState(0);
   const [category, setCategory] = useState(null);
   const [value, setValue] = useState(0);
@@ -29,6 +30,8 @@ const AddItem = ({ setAddItem }) => {
       ctx.notify("error", "Please fill all the fields");
       return;
     }
+
+    setLoading("Saving...");
 
     // add new data
     tmpItems.push({
@@ -70,12 +73,17 @@ const AddItem = ({ setAddItem }) => {
     // save to firebase
     const db = getFirestore();
     const dataRef = collection(db, `users/${uid}/data`);
-    await setDoc(doc(dataRef, monthData), finalData).then(() => {
-      set("data", tmpItems);
-      set("total", total);
-      notify("success", "Item added successfully");
-      setAddItem(false);
-    });
+    await setDoc(doc(dataRef, activeMonth), finalData)
+      .then(() => {
+        set("data", tmpItems);
+        set("total", total);
+        notify("success", "Item added successfully");
+        setAddItem(false);
+      })
+      .catch(() => {
+        notify("error", "Error adding item");
+        setLoading(null);
+      });
   };
 
   return (
@@ -114,6 +122,7 @@ const AddItem = ({ setAddItem }) => {
           onClick={() => saveItem()}
           icon={`save`}
           text={method === 0 ? "Save Expense" : "Save Income"}
+          loading={loading}
         />
       </div>
     </>

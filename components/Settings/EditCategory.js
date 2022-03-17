@@ -14,11 +14,14 @@ import Input from "../Input";
 export default function EditCategory({ data, setEditCategoryModal }) {
   const ctx = useContext(Context);
 
+  const [deleting, setDeleting] = useState(null);
+  const [updating, setUpdating] = useState(null);
   const [name, setName] = useState(data?.name);
   const [icon, setIcon] = useState(data?.icon);
   const [method, setMethod] = useState(data?.method);
 
   const deleteCategory = async () => {
+    setDeleting("Deleting...");
     const tmpCategories = [].concat(ctx?.profile?.categories || []);
 
     const tmpData = {
@@ -27,13 +30,20 @@ export default function EditCategory({ data, setEditCategoryModal }) {
     };
 
     const db = getFirestore();
-    await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
-      ctx?.notify("success", "Category successfully deleted");
-      setEditCategoryModal(null);
-    });
+    await setDoc(doc(db, "users", ctx?.uid), tmpData)
+      .then(() => {
+        ctx?.notify("success", "Category successfully deleted");
+        setEditCategoryModal(null);
+        setDeleting(null);
+      })
+      .catch(() => {
+        ctx?.notify("error", "Error deleting category");
+        setDeleting(null);
+      });
   };
 
   const updateCategory = async () => {
+    setUpdating("Updating...");
     const tmpCategories = [].concat(ctx?.profile?.categories || []);
 
     const tmpData = {
@@ -52,10 +62,16 @@ export default function EditCategory({ data, setEditCategoryModal }) {
     };
 
     const db = getFirestore();
-    await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
-      ctx?.notify("success", "Category successfully updated");
-      setEditCategoryModal(null);
-    });
+    await setDoc(doc(db, "users", ctx?.uid), tmpData)
+      .then(() => {
+        ctx?.notify("success", "Category successfully updated");
+        setEditCategoryModal(null);
+        setUpdating(null);
+      })
+      .catch(() => {
+        ctx?.notify("error", "Error updating category");
+        setUpdating(null);
+      });
   };
 
   return (
@@ -123,12 +139,14 @@ export default function EditCategory({ data, setEditCategoryModal }) {
               text="Delete"
               color="red"
               icon="delete"
+              loading={deleting}
             />
 
             <Button
               onClick={() => updateCategory()}
               text="Update"
               icon="save"
+              loading={updating}
             />
           </div>
         </div>

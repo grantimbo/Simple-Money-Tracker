@@ -2,16 +2,20 @@ import Router from "next/router";
 import { numberWithCommas } from "../../support/formatNumber";
 
 const OverviewCard = ({ currency, link, data, name }) => {
+  const value = () => {
+    return `${currency ? currency : "$"}${numberWithCommas(data || 0)}`;
+  };
+
   const displayValue = () => {
     if (name == "Balance") {
       if (data < 0) {
         const d = numberWithCommas(data || 0);
         return `-${currency ? currency : "$"}${d.slice(1)}`;
       } else {
-return `${currency ? currency : "$"}${numberWithCommas(data || 0)}`;
-}
+        return value();
+      }
     } else {
-      return `${currency ? currency : "$"}${numberWithCommas(data || 0)}`;
+      return value();
     }
   };
 

@@ -1,7 +1,14 @@
 import React from "react";
 import Router from "next/router";
 import app from "./firebase";
-import { doc, getDoc, onSnapshot, getFirestore } from "firebase/firestore";
+import {
+  doc,
+  getDocs,
+  onSnapshot,
+  getFirestore,
+  collection,
+  getDoc,
+} from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const Context = React.createContext();
@@ -22,7 +29,8 @@ export class GlobalStateProvider extends React.Component {
     profile: 0,
     notifications: [],
     loggedIn: false,
-    monthData: `${m}_${y}`,
+    activeMonth: `${m}_${y}`,
+    monthList: [],
     data: [],
     total: {
       income: 0,
@@ -48,6 +56,17 @@ export class GlobalStateProvider extends React.Component {
   }
 
   listenForProfile(uid) {
+    const getData = async () => {
+      const userData = collection(db, `users/${uid}/data`);
+      const docSnap = await getDocs(userData);
+
+      this.setState({
+        monthList: docSnap.docs.map((doc) => doc.id),
+      });
+    };
+
+    getData();
+
     profileListener = onSnapshot(doc(db, "users", uid), (doc) => {
       this.setState({ profile: doc.data() });
     });

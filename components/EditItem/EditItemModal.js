@@ -9,7 +9,7 @@ import InputLabel from "../InputLabel";
 
 const Details = ({ data, setShowDetails }) => {
   const ctx = useContext(Context);
-  const { uid, set, notify, monthData, profile } = ctx;
+  const { uid, set, notify, activeMonth, profile } = ctx;
 
   // firebase reference
   const db = getFirestore();
@@ -19,13 +19,16 @@ const Details = ({ data, setShowDetails }) => {
   const [value, setValue] = useState(data?.value);
   const [date, setDate] = useState(new Date(data?.date));
   const [note, setNote] = useState(data?.note);
+  const [loading, setLoading] = useState(null);
+  const [loadingDelete, setLoadingDelete] = useState(null);
 
   let tmpIncome = 0;
   let tmpExpense = 0;
   const tmpItems = [].concat(ctx?.data || []);
 
-  const deleteItem = async (id) => {
-    const newList = tmpItems.filter((item) => item.id !== id);
+  const deleteItem = async () => {
+    setLoadingDelete("Deleting...");
+    const newList = tmpItems.filter((item) => item.id !== data?.id);
 
     // calculate new total
     newList.forEach((e) => {
@@ -47,12 +50,17 @@ const Details = ({ data, setShowDetails }) => {
       total: total,
     };
 
-    await setDoc(doc(dataRef, monthData), finalData).then(() => {
-      set("data", newList);
-      set("total", total);
-      notify("success", "Item deleted successfully");
-      setShowDetails(null);
-    });
+    await setDoc(doc(dataRef, activeMonth), finalData)
+      .then(() => {
+        set("data", newList);
+        set("total", total);
+        notify("success", "Item deleted successfully");
+        setShowDetails(null);
+      })
+      .catch((err) => {
+        notify("error", err.message);
+        setLoadingDelete(null);
+      });
   };
 
   const updateData = async () => {
@@ -61,6 +69,8 @@ const Details = ({ data, setShowDetails }) => {
       ctx.notify("error", "Please fill all the fields");
       return;
     }
+
+    setLoading("Updating...");
 
     // assign new values
     tmpItems.forEach((e) => {
@@ -100,12 +110,17 @@ const Details = ({ data, setShowDetails }) => {
       total: total,
     };
 
-    await setDoc(doc(dataRef, monthData), finalData).then(() => {
-      set("data", tmpItems);
-      set("total", total);
-      notify("success", "Item successfully updated");
-      setShowDetails(null);
-    });
+    await setDoc(doc(dataRef, activeMonth), finalData)
+      .then(() => {
+        set("data", tmpItems);
+        set("total", total);
+        notify("success", "Item successfully updated");
+        setShowDetails(null);
+      })
+      .catch(() => {
+        notify("error", "Error updating item");
+        setLoading(null);
+      });
   };
 
   return (
@@ -210,15 +225,21 @@ const Details = ({ data, setShowDetails }) => {
               text="Cancel"
               color="gray"
             />
-            <Button onClick={() => updateData()} icon="save" text="Update" />
+            <Button
+              onClick={() => updateData()}
+              icon="save"
+              text="Update"
+              loading={loading}
+            />
           </>
         ) : (
           <>
             <Button
-              onClick={() => deleteItem(data?.id)}
+              onClick={() => deleteItem()}
               icon="delete_outline"
               color="red"
               text="Delete"
+              loading={loadingDelete}
             />
             <Button onClick={() => setEditItem(true)} icon="edit" text="Edit" />
           </>

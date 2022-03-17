@@ -9,6 +9,7 @@ import { generateID } from "../../support/generateID";
 export default function AddCategory({ setAddCategoryModal }) {
   const ctx = useContext(Context);
 
+  const [loading, setLoading] = useState(null);
   const [method, setMethod] = useState(null);
   const [name, setName] = useState(null);
   const [icon, setIcon] = useState(null);
@@ -19,6 +20,8 @@ export default function AddCategory({ setAddCategoryModal }) {
       ctx?.notify("error", "Please fill the empty fields");
       return;
     }
+
+    setLoading("Saving...");
 
     //  check for duplicates
     const tmpCategories = [].concat(ctx?.profile?.categories || []);
@@ -42,10 +45,15 @@ export default function AddCategory({ setAddCategoryModal }) {
     };
 
     const db = getFirestore();
-    await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
-      ctx?.notify("success", "Category successfully added");
-      setAddCategoryModal(false);
-    });
+    await setDoc(doc(db, "users", ctx?.uid), tmpData)
+      .then(() => {
+        ctx?.notify("success", "Category successfully added");
+        setAddCategoryModal(false);
+      })
+      .catch(() => {
+        ctx?.notify("error", "Error adding category");
+        setLoading(null);
+      });
   };
 
   return (
@@ -112,6 +120,7 @@ export default function AddCategory({ setAddCategoryModal }) {
             onClick={() => saveCategory()}
             text="Save Category"
             icon="save"
+            loading={loading}
           ></Button>
         </div>
       </div>

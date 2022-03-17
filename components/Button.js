@@ -1,5 +1,6 @@
 const Button = (props) => {
-  const { onClick, text, icon, additionalClasses, color, size } = props;
+  const { onClick, text, icon, additionalClasses, color, size, loading } =
+    props;
 
   const colors = {
     green: "text-white bg-lime-500 focus:outline-lime-700",
@@ -22,8 +23,17 @@ const Button = (props) => {
       } ${sizes[size] || sizes["md"]} ${additionalClasses}`}
       title={text}
     >
-      {icon && <span className="material-icons-round">{icon}</span>}
-      <span className="truncate">{text}</span>
+      {loading ? (
+        <>
+          <span className="material-icons-round animate-spin origin-center">
+            rotate_right
+          </span>
+        </>
+      ) : (
+        <>{icon && <span className="material-icons-round">{icon}</span>}</>
+      )}
+
+      <span className="truncate">{loading ? loading : text}</span>
     </button>
   );
 };

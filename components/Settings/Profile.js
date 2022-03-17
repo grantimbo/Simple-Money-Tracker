@@ -9,6 +9,7 @@ import InputLabel from "../InputLabel";
 const Profile = () => {
   const ctx = useContext(Context);
 
+  const [loading, setLoading] = useState(null);
   const [name, setName] = useState(ctx?.profile?.name || "");
   const [currency, setCurrency] = useState(ctx?.profile?.currency || "$");
 
@@ -18,6 +19,8 @@ const Profile = () => {
       return;
     }
 
+    setLoading("Saving...");
+
     const tmpData = {
       ...ctx.profile,
       name: name,
@@ -26,10 +29,15 @@ const Profile = () => {
 
     // Add a new document in collection "cities"
     const db = getFirestore();
-    await setDoc(doc(db, "users", ctx?.uid), tmpData).then(() => {
-      // add data to database
-      ctx.notify("success", "Profile updated");
-    });
+    await setDoc(doc(db, "users", ctx?.uid), tmpData)
+      .then(() => {
+        ctx.notify("success", "Profile succesfully updated");
+        setLoading(null);
+      })
+      .catch((err) => {
+        ctx.notify("error", err.message);
+        setLoading(null);
+      });
   };
 
   return (
@@ -50,7 +58,12 @@ const Profile = () => {
         setCurrency={setCurrency}
         color="gray"
       />
-      <Button onClick={() => saveInfo()} text="Save" icon="lock" />
+      <Button
+        onClick={() => saveInfo()}
+        text="Save"
+        icon="lock"
+        loading={loading}
+      />
     </section>
   );
 };
