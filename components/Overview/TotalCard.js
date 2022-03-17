@@ -7,7 +7,9 @@ const OverviewCard = ({ currency, link, data, name }) => {
       if (data < 0) {
         const d = numberWithCommas(data || 0);
         return `-${currency ? currency : "$"}${d.slice(1)}`;
-      }
+      } else {
+return `${currency ? currency : "$"}${numberWithCommas(data || 0)}`;
+}
     } else {
       return `${currency ? currency : "$"}${numberWithCommas(data || 0)}`;
     }
