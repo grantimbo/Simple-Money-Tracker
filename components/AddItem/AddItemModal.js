@@ -19,16 +19,16 @@ const AddItem = ({ setAddItem }) => {
   const [value, setValue] = useState(0);
   const [note, setNote] = useState("");
 
+  let tmpIncome = 0;
+  let tmpExpense = 0;
+  const tmpItems = [].concat(ctx?.data || []);
+
   const saveItem = async () => {
     // check for erors
     if (!category || value <= 0) {
       ctx.notify("error", "Please fill all the fields");
       return;
     }
-
-    let tmpIncome = 0;
-    let tmpExpense = 0;
-    const tmpItems = [].concat(ctx?.data || []);
 
     // add new data
     tmpItems.push({
@@ -39,6 +39,14 @@ const AddItem = ({ setAddItem }) => {
       note: note,
       method: method,
     });
+
+    // sort date
+    tmpItems.sort((a, b) => {
+      return a.date - b.date;
+    });
+
+    // reverse sorted (new firstst)
+    tmpItems.reverse();
 
     // calculate total
     tmpItems.forEach((e) => {

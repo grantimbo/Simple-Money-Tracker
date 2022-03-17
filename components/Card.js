@@ -22,7 +22,7 @@ const Card = (props) => {
       className="bg-white rounded-lg shadow-sm px-2 py-1 cursor-pointer fade-in md:px-4 md:py-2"
       key={item?.id}
     >
-      <div className="text-xs border-b border-gray-100 pb-1 flex items-center justify-between text-gray-400 md:text-base">
+      <div className="font-thin text-xs border-b border-gray-100 pb-1 flex items-center justify-between text-gray-400 md:font-light md:text-sm">
         <span>
           {date.toLocaleString("default", {
             month: "short",
@@ -43,7 +43,7 @@ const Card = (props) => {
         </span>
       </div>
       <div
-        className="flex items-center justify-between py-1 pb-1 text-base font-medium md:py-2 md:text-2xl"
+        className="flex items-center justify-between py-1 pb-1 text-sm font-medium md:py-2 md:text-2xl"
         title={`${displayValue()} | ${item?.note}`}
       >
         <span className="flex space-x-1 items-center md:space-x-3">

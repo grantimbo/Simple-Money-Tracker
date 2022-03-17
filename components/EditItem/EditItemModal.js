@@ -56,6 +56,12 @@ const Details = ({ data, setShowDetails }) => {
   };
 
   const updateData = async () => {
+    // check for erors
+    if (!date || !note || value <= 0) {
+      ctx.notify("error", "Please fill all the fields");
+      return;
+    }
+
     // assign new values
     tmpItems.forEach((e) => {
       if (e.id == data?.id) {
@@ -187,7 +193,9 @@ const Details = ({ data, setShowDetails }) => {
             color="gray"
             value={note}
             setValue={setNote}
-            placeholder="Hudson Grant"
+            placeholder={`Notes for this ${
+              data?.method === 0 ? "expense" : "income"
+            }`}
             additionalClasses="mb-4"
           />
         </section>

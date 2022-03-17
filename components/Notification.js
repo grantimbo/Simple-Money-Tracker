@@ -15,7 +15,7 @@ const Notification = () => {
       case "success":
         return (
           <div
-            className={`bg-lime-500 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in`}
+            className={`bg-lime-500 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in text-sm md:text-base`}
           >
             <span className="material-icons-round text-3xl">done</span>
             <span>{e.notificationText}</span>
@@ -23,14 +23,14 @@ const Notification = () => {
         );
       case "error":
         return (
-          <div className="bg-red-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in">
+          <div className="bg-red-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in text-sm md:text-base">
             <span className="material-icons-round text-3xl">error_outline</span>
             <span>{e.notificationText}</span>
           </div>
         );
       case "info":
         return (
-          <div className="bg-orange-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in">
+          <div className="bg-orange-600 text-white px-6 py-4 rounded-lg space-x-2 flex items-center fade-in text-sm md:text-base">
             <span className="material-icons-round text-3xl">info_outline</span>
             <span>{e.notificationText}</span>
           </div>
@@ -52,7 +52,7 @@ const Notification = () => {
   return (
     <>
       {ctx.notifications.length > 0 && (
-        <div className="fixed z-50 left-10 bottom-16 flex flex-col-reverse gap-2">
+        <div className="fixed z-50 left-2 bottom-2 flex flex-col-reverse gap-2 md:left-10 md:bottom-16">
           {ctx.notifications.map((e, c) => {
             return (
               <div key={c} onClick={() => killNotification(c)}>

@@ -5,9 +5,14 @@ import BackHomeLink from "../../components/BackHomeLink";
 import PageTitle from "../../components/PageTitle";
 import List from "../../components/List";
 import Title from "../../components/Title";
+import TotalCard from "../../components/Overview/TotalCard";
 
 export default function Expenses() {
   const ctx = useContext(Context);
+  const {
+    total,
+    profile: { currency },
+  } = ctx;
 
   const expenseList = ctx?.data?.filter((item) => item.method == 0);
 
@@ -17,6 +22,14 @@ export default function Expenses() {
       <DashLayout>
         <BackHomeLink />
         <PageTitle title={`Expense`} />
+        <div className="mb-4">
+          <TotalCard
+            currency={currency}
+            name="Expenses"
+            link="/dash/expenses"
+            data={total?.income}
+          />
+        </div>
         <List data={expenseList} />
       </DashLayout>
     </>
