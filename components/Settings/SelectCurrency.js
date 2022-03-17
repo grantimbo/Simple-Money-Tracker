@@ -1,5 +1,6 @@
 import { currencies } from "../../support/currencies";
 import { useEffect, useState } from "react";
+import SelectWrapper from "../SelectWrapper";
 
 const SelectCurrency = (props) => {
   const { color, currency, setCurrency, additionalClasses } = props;
@@ -18,12 +19,7 @@ const SelectCurrency = (props) => {
   }, []);
 
   return (
-    <div className="relative mb-4">
-      <span className="absolute top-0 bottom-0 right-0 w-8 flex items-center ">
-        <span className="material-icons-round text-gray-300">
-          keyboard_arrow_down
-        </span>
-      </span>
+    <SelectWrapper additionalClasses={`mb-4`}>
       <select
         onChange={(e) => assignCurrency(e?.target?.value)}
         required
@@ -32,7 +28,7 @@ const SelectCurrency = (props) => {
           color == "gray"
             ? "bg-gray-50 border-2 border-gray-200 text-gray-900 focus:outline-gray-400"
             : "bg-lime-100 border-2 border-lime-500 text-teal-900 focus:outline-lime-400"
-        } text hover:bg-opacity-80  px-5 py-2 rounded-full appearance-none ${additionalClasses}`}
+        } text-sm w-full px-5 py-2 rounded-full appearance-none md:text-base ${additionalClasses}`}
       >
         {currencies?.map((cur) => {
           return (
@@ -42,7 +38,7 @@ const SelectCurrency = (props) => {
           );
         })}
       </select>
-    </div>
+    </SelectWrapper>
   );
 };
 

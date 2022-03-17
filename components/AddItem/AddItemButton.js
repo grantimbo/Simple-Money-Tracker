@@ -12,6 +12,7 @@ const AddItemButton = () => {
         onClick={() => setAddItem(true)}
         text="Add Item"
         icon="add_circle_outline"
+        additionalClasses="fixed bottom-5 right-5 z-30 md:relative md:bottom-0 md:right-0"
       >
         Add Item
       </Button>

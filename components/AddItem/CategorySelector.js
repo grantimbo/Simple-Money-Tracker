@@ -8,7 +8,7 @@ const CategorySelector = ({ method, category, setCategory }) => {
   const income = ctx?.profile?.categories?.filter((e) => e.method == 1);
 
   return (
-    <div className="grid grid-cols-3 gap-2 mb-6">
+    <div className="grid grid-cols-2 gap-1 mb-6 md:grid-cols-3 md:gap-2">
       {method === 0
         ? expense?.map((cat) => {
             return (
@@ -24,10 +24,12 @@ const CategorySelector = ({ method, category, setCategory }) => {
                   cat?.name == category?.name
                     ? "bg-lime-200 border-lime-500 text-lime-600 "
                     : "bg-gray-50 text-gray-500"
-                }  border-2 rounded-full px-4 py-2 cursor-pointer flex items-center justify-center space-x-2 text-sm`}
+                }  border-2 rounded-full px-4 py-2 cursor-pointer flex items-center justify-left space-x-2 text-xs md:text-base`}
               >
                 {cat?.icon && (
-                  <span className="material-icons-round">{cat?.icon}</span>
+                  <span className="material-icons-round text-sm md:text-xl">
+                    {cat?.icon}
+                  </span>
                 )}
                 <span>{cat?.name}</span>
               </div>

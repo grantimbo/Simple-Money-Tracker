@@ -11,12 +11,18 @@ const Card = (props) => {
   const { item } = props;
   const date = new Date(item.date);
 
+  const displayValue = () => {
+    return `${item?.method == 0 ? "-" : ""} ${
+      currency ? currency : "$"
+    }${numberWithCommas(item?.value)}`;
+  };
+
   return (
     <div
-      className="bg-white rounded-lg shadow-sm px-4 py-2 cursor-pointer fade-in"
+      className="bg-white rounded-lg shadow-sm px-2 py-1 cursor-pointer fade-in md:px-4 md:py-2"
       key={item?.id}
     >
-      <div className="text-md border-b border-gray-100 pb-1 flex items-center justify-between text-gray-400">
+      <div className="text-xs border-b border-gray-100 pb-1 flex items-center justify-between text-gray-400 md:text-base">
         <span>
           {date.toLocaleString("default", {
             month: "short",
@@ -36,15 +42,17 @@ const Card = (props) => {
           )}`}
         </span>
       </div>
-      <div className="flex items-center justify-between py-2 pb-1 text-2xl font-medium">
-        <span className="flex space-x-3 items-center ">
-          <span className="material-icons-round">{item?.category?.icon}</span>
+      <div
+        className="flex items-center justify-between py-1 pb-1 text-base font-medium md:py-2 md:text-2xl"
+        title={`${displayValue()} | ${item?.note}`}
+      >
+        <span className="flex space-x-1 items-center md:space-x-3">
+          <span className="material-icons-round text-sm md:text-base">
+            {item?.category?.icon}
+          </span>
           <div>{item?.note}</div>
         </span>
-        <div>
-          {item?.method == 0 && "-"} {currency ? currency : "$"}
-          {numberWithCommas(item?.value)}
-        </div>
+        <div>{displayValue()}</div>
       </div>
     </div>
   );

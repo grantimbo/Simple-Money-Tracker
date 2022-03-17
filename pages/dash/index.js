@@ -16,7 +16,7 @@ export default function Home() {
       <Title title="Dashboard" />
       <DashLayout>
         <Overview />
-        <div className="my-8 flex items-center justify-between">
+        <div className="my-4 flex items-center justify-end md:justify-between md:my-8">
           <AddItemButton />
           <DateSelector />
         </div>

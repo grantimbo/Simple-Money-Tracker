@@ -1,14 +1,14 @@
-import Link from "next/link";
+import ButtonLink from "./ButtonLink";
 
 const BackHomeLink = () => {
   return (
-    <div className="border-b border-gray-200 pb-6 mb-10">
-      <Link href="/dash">
-        <a className="text-lg bg-lime-500 rounded-full px-4 py-2 text-white inline-flex items-center space-x-2 ">
-          <span className="material-icons-round">arrow_back</span>
-          <span>Back</span>
-        </a>
-      </Link>
+    <div className="border-b border-gray-200 pb-3 my-2 md:pb-6 md:mb-10">
+      <div className="md:hidden">
+        <ButtonLink href="/dash" icon="chevron_left" text="Back" size="sm" />
+      </div>
+      <div className="hidden md:inline">
+        <ButtonLink href="/dash" icon="chevron_left" text="Back" size="md" />
+      </div>
     </div>
   );
 };

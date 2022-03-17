@@ -8,6 +8,7 @@ import Title from "../Title";
 import TabSelector from "./TabSelector";
 import CategorySelector from "./CategorySelector";
 import { generateID } from "../../support/generateID";
+import InputLabel from "../InputLabel";
 
 const AddItem = ({ setAddItem }) => {
   const ctx = useContext(Context);
@@ -75,41 +76,37 @@ const AddItem = ({ setAddItem }) => {
       <PageTitle title={method === 0 ? "Add Expense" : "Add Income"} />
       <TabSelector method={method} setMethod={setMethod} />
 
-      <div className="mt-6">
-        <div className="mt-6 grid ">
-          <p className="text-gray-400 text-md mb-1">Amount</p>
-          <Input
-            color={`gray`}
-            type={`number`}
-            setValue={setValue}
-            placeholder={`${profile?.account?.currency || "$"}0.00`}
-            additionalClasses="mb-5"
-          />
+      <div className="mt-4 grid md:mt-6">
+        <InputLabel text={`Amount`} />
+        <Input
+          color={`gray`}
+          type={`number`}
+          setValue={setValue}
+          placeholder={`${profile?.account?.currency || "$"}0.00`}
+          additionalClasses="mb-3 md:mb-6"
+        />
 
-          <p className="text-gray-400 text-md mb-1">Note</p>
-          <Input
-            color={`gray`}
-            type={`text`}
-            setValue={setNote}
-            placeholder={`Notes for this ${
-              method === 0 ? "expense" : "income"
-            }`}
-            additionalClasses="mb-4"
-          />
+        <InputLabel text={`Note`} />
+        <Input
+          color={`gray`}
+          type={`text`}
+          setValue={setNote}
+          placeholder={`Notes for this ${method === 0 ? "expense" : "income"}`}
+          additionalClasses="mb-3 md:mb-6"
+        />
 
-          <p className="text-gray-400 text-md mb-1">Category</p>
-          <CategorySelector
-            method={method}
-            category={category}
-            setCategory={setCategory}
-          />
+        <InputLabel text={`Category`} />
+        <CategorySelector
+          method={method}
+          category={category}
+          setCategory={setCategory}
+        />
 
-          <Button
-            onClick={() => saveItem()}
-            icon={`save`}
-            text={method === 0 ? "Save Expense" : "Save Income"}
-          />
-        </div>
+        <Button
+          onClick={() => saveItem()}
+          icon={`save`}
+          text={method === 0 ? "Save Expense" : "Save Income"}
+        />
       </div>
     </>
   );

@@ -10,7 +10,7 @@ const ButtonLink = (props) => {
   };
 
   const sizes = {
-    sm: "px-5 py-2 text-md",
+    sm: "px-5 py-2 text-sm",
     md: "px-5 py-2 text-lg",
     lg: "px-10 py-3 text-xl",
     xl: "px-10 py-3 text-2xl",

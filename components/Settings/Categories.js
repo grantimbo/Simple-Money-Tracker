@@ -16,7 +16,7 @@ const EditCategories = () => {
 
   return (
     <>
-      <section className="grid grid-cols-2 gap-2 w-full md:w-8/12 mb-6">
+      <section className="grid grid-cols-2 gap-2 w-full max-w-sm mb-6">
         <CategoryCard
           title={`Expenses`}
           catList={expense}

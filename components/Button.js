@@ -8,9 +8,9 @@ const Button = (props) => {
   };
 
   const sizes = {
-    sm: "px-5 py-2 text-md",
+    sm: "px-5 py-2 text-base",
     md: "px-5 py-2 text-lg",
-    xl: "px-10 py-3 text-xl",
+    lg: "px-10 py-3 text-xl",
     xl: "px-10 py-3 text-2xl",
   };
 
@@ -20,9 +20,10 @@ const Button = (props) => {
       className={` hover:bg-opacity-80  space-x-2 cursor-pointer rounded-full text-center  justify-center inline-flex items-center ${
         colors[color] || colors["green"]
       } ${sizes[size] || sizes["md"]} ${additionalClasses}`}
+      title={text}
     >
       {icon && <span className="material-icons-round">{icon}</span>}
-      <span>{text}</span>
+      <span className="truncate">{text}</span>
     </button>
   );
 };

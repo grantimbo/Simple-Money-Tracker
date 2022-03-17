@@ -62,7 +62,7 @@ export default function EditCategory({ data, setEditCategoryModal }) {
     <main className="">
       <div className="mt-6">
         <div className="grid">
-          <p className="text-gray-400 text-md mb-1">Name</p>
+          <p className="text-gray-400 text-base mb-1">Name</p>
           <Input
             type={"text"}
             color="gray"
@@ -72,7 +72,7 @@ export default function EditCategory({ data, setEditCategoryModal }) {
             placeholder="Name"
             additionalClasses="mb-4"
           />
-          <p className="text-gray-400 text-md mb-1">Category</p>
+          <p className="text-gray-400 text-base mb-1">Category</p>
           <div className="flex space-x-2 mb-4">
             <div
               onClick={() => setMethod(0)}
@@ -95,7 +95,7 @@ export default function EditCategory({ data, setEditCategoryModal }) {
               Income
             </div>
           </div>
-          <p className="text-gray-400 text-md mb-1">Icon</p>
+          <p className="text-gray-400 text-base mb-1">Icon</p>
           <div className="max-h-72 overflow-y-auto  mb-6">
             <div className="grid gap-1 grid-cols-6">
               {categoryIcons?.map((e) => (

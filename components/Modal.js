@@ -9,7 +9,7 @@ const Modal = ({ children, onClose }) => {
   }, []);
 
   return (
-    <div className="fixed -top-2 left-0 bottom-0 right-0 p-10 fade-in z-50">
+    <div className="fixed -top-2 left-0 bottom-0 right-0 p-4 fade-in z-50 md:p-10">
       <div className="bg-gray-50 rounded-lg p-4 max-w-lg w-full mx-auto mt-20 relative z-10 shadow-sm">
         <div
           onClick={onClose}

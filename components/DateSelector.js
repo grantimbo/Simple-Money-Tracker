@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { months } from "../support/months";
 import { Context } from "../support/globalState";
 import { getDoc, doc, getFirestore, collection } from "firebase/firestore";
+import SelectWrapper from "./SelectWrapper";
 
 const DateSelector = () => {
   const ctx = useContext(Context);
@@ -30,17 +31,12 @@ const DateSelector = () => {
   }, [ctx.monthData]);
 
   return (
-    <div className="relative">
-      <span className="absolute top-0 bottom-0 right-0 w-8 flex items-center ">
-        <span className="material-icons-round text-gray-300">
-          keyboard_arrow_down
-        </span>
-      </span>
+    <SelectWrapper>
       <select
         onChange={(e) => set("monthData", e?.target?.value)}
         required
         value={monthData}
-        className="bg-gray-50 border-2 border-gray-200 text-gray-900 focus:outline-gray-400 text hover:bg-opacity-80  px-5 py-2 pr-9 rounded-full appearance-none w-full"
+        className="bg-gray-50 border-2 border-gray-200 text-gray-900 focus:outline-gray-400 text-sm hover:bg-opacity-80  px-5 py-2 pr-9 rounded-full appearance-none w-full md:text-base"
       >
         {months?.map((m) => {
           return (
@@ -50,7 +46,7 @@ const DateSelector = () => {
           );
         })}
       </select>
-    </div>
+    </SelectWrapper>
   );
 };
 

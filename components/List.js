@@ -9,7 +9,7 @@ const List = ({ data }) => {
 
   return (
     <>
-      <div className="grid gap-3">
+      <div className="grid gap-2 md:gap-3">
         {data?.map((e) => {
           return (
             <div key={e?.id} onClick={() => setShowDetails(e)}>

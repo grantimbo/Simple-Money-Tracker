@@ -131,7 +131,7 @@ const Details = ({ data, setShowDetails }) => {
 
       {editItem && (
         <section className="grid">
-          <p className="text-gray-400 text-md mb-1">Value</p>
+          <p className="text-gray-400 text-base mb-1">Value</p>
           <Input
             type={`text`}
             color="gray"
@@ -141,7 +141,7 @@ const Details = ({ data, setShowDetails }) => {
             additionalClasses="mb-4"
           />
 
-          <p className="text-gray-400 text-md mb-1">Date</p>
+          <p className="text-gray-400 text-base mb-1">Date</p>
           <Input
             type={`text`}
             color="gray"
@@ -151,7 +151,7 @@ const Details = ({ data, setShowDetails }) => {
             additionalClasses="mb-4"
           />
 
-          <p className="text-gray-400 text-md mb-1">Note</p>
+          <p className="text-gray-400 text-base mb-1">Note</p>
           <Input
             type={`text`}
             color="gray"

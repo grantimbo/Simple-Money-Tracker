@@ -10,7 +10,7 @@ export default function Overview() {
   } = ctx;
 
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-6">
+    <div className="w-full grid grid-cols-3 gap-2 mt-4 md:mt-6 md:gap-5">
       <TotalCard
         currency={currency}
         name="Expenses"
