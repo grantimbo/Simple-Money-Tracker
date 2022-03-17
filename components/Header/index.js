@@ -12,7 +12,7 @@ const Header = () => {
       <nav className="flex items-center justify-between flex-wrap bg-white h-16 px-4 shadow-sm">
         <Link href={`/dash`}>
           <a
-            className="text-xl font-medium cursor-pointer md:text-2xl max-w-[50%] truncate "
+            className="text-xl font-medium cursor-pointer md:text-2xl max-w-[65%] truncate "
             title="Simple Money Tracker"
           >
             <span>Simple Money Tracker</span>

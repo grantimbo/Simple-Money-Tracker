@@ -3,6 +3,9 @@ import { Context } from "../../support/globalState";
 import { doc, setDoc, collection, getFirestore } from "firebase/firestore";
 import Button from "../Button";
 import Input from "../Input";
+import { numberWithCommas } from "../../support/formatNumber";
+import InputDate from "../InputDate";
+import InputLabel from "../InputLabel";
 
 const Details = ({ data, setShowDetails }) => {
   const ctx = useContext(Context);
@@ -14,7 +17,7 @@ const Details = ({ data, setShowDetails }) => {
 
   const [editItem, setEditItem] = useState(false);
   const [value, setValue] = useState(data?.value);
-  const [date, setDate] = useState(data?.date);
+  const [date, setDate] = useState(new Date(data?.date));
   const [note, setNote] = useState(data?.note);
 
   let tmpIncome = 0;
@@ -53,22 +56,30 @@ const Details = ({ data, setShowDetails }) => {
   };
 
   const updateData = async () => {
-    // set new values
-    for (const item of tmpItems) {
-      if (item["id"] == data?.id) {
-        item["value"] = value;
-        item["date"] = date;
-        item["note"] = note;
-        break;
-      }
-    }
-
-    // calculate new total
+    // assign new values
     tmpItems.forEach((e) => {
-      e.method == 0
-        ? (tmpExpense += parseFloat(e.value))
-        : (tmpIncome += parseFloat(e.value));
+      if (e.id == data?.id) {
+        e.value = value;
+        e.date = new Date(date).getTime();
+        e.note = note;
+
+        e.method == 0
+          ? (tmpExpense += parseFloat(value))
+          : (tmpIncome += parseFloat(value));
+      } else {
+        e.method == 0
+          ? (tmpExpense += parseFloat(e.value))
+          : (tmpIncome += parseFloat(e.value));
+      }
     });
+
+    // sort date
+    tmpItems.sort((a, b) => {
+      return a.date - b.date;
+    });
+
+    // reverse sorted (new firstst)
+    tmpItems.reverse();
 
     // calculate total
     const total = {
@@ -94,14 +105,14 @@ const Details = ({ data, setShowDetails }) => {
   return (
     <>
       <div className="font-medium border-b border-gray-200 pb-2 mb-4 flex items-center space-x-2">
-        <span className="material-icons-round">
+        <span className="material-icons-round text-lg md:text-2xl">
           {data?.category?.icon && <>{data?.category?.icon}</>}
           {!data?.category?.name && (
             <>{data?.method == 0 ? "receipt" : "account_balance_wallet"}</>
           )}
         </span>
 
-        <span className="text-2xl capitalize">
+        <span className="text-xl font-medium md:text-3xl">
           {data?.category?.name && data?.category?.name}
           {!data?.category?.name && (
             <>{data?.method == 0 ? " Expense" : " Income"}</>
@@ -110,30 +121,50 @@ const Details = ({ data, setShowDetails }) => {
       </div>
 
       {!editItem && (
-        <div className="text-lg grid gap-1">
+        <div className="text-base grid gap-1 md:text-lg">
           <div>
-            Category:{" "}
+            <span>{`Value: `}</span>
+            <span className="font-medium">{`${
+              ctx?.profile?.currency ? ctx?.profile?.currency : "$"
+            }${numberWithCommas(data?.value || 0)}`}</span>
+          </div>
+
+          <div>
+            <span>{`Note: `}</span>
+            <span className="font-medium">{data?.note}</span>
+          </div>
+
+          <div>
+            <span>{`Date: `}</span>
+            <span className="font-medium">
+              {date.toLocaleString("default", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+              {` — `}
+              {date.toLocaleString("default", {
+                hour: "numeric",
+                hour12: true,
+                minute: "numeric",
+              })}
+            </span>
+          </div>
+
+          <div>
+            <span>{`Category: `}</span>
             <span className="font-medium capitalize">
               {data?.method == 0 ? "Expense" : "Income"}
             </span>
-          </div>
-          <div>
-            Value: <span className="font-medium">{data?.value}</span>
-          </div>
-          <div>
-            Date: <span className="font-medium">{data?.date}</span>
-          </div>
-          <div>
-            Note: <span className="font-medium">{data?.note}</span>
           </div>
         </div>
       )}
 
       {editItem && (
         <section className="grid">
-          <p className="text-gray-400 text-base mb-1">Value</p>
+          <InputLabel text="Value" />
           <Input
-            type={`text`}
+            type={`number`}
             color="gray"
             value={value}
             setValue={setValue}
@@ -141,9 +172,8 @@ const Details = ({ data, setShowDetails }) => {
             additionalClasses="mb-4"
           />
 
-          <p className="text-gray-400 text-base mb-1">Date</p>
-          <Input
-            type={`text`}
+          <InputLabel text="Date" />
+          <InputDate
             color="gray"
             value={date}
             setValue={setDate}
@@ -151,7 +181,7 @@ const Details = ({ data, setShowDetails }) => {
             additionalClasses="mb-4"
           />
 
-          <p className="text-gray-400 text-base mb-1">Note</p>
+          <InputLabel text="Note" />
           <Input
             type={`text`}
             color="gray"

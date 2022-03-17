@@ -13,7 +13,7 @@ const Modal = ({ children, onClose }) => {
       <div className="bg-gray-50 rounded-lg p-4 max-w-lg w-full mx-auto mt-20 relative z-10 shadow-sm">
         <div
           onClick={onClose}
-          className="absolute right-4 top-2 cursor-pointer "
+          className="absolute right-3 top-2 cursor-pointer "
         >
           <span className="material-icons-round text-4xl">highlight_off</span>
         </div>
