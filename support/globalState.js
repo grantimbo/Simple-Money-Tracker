@@ -1,5 +1,4 @@
 import React from "react";
-import Router from "next/router";
 import app from "./firebase";
 import {
   doc,
@@ -7,7 +6,6 @@ import {
   onSnapshot,
   getFirestore,
   collection,
-  getDoc,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 

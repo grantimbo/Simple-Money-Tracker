@@ -5,12 +5,12 @@ import Button from "../Button";
 
 const DeleteItem = ({ id, setShowDetails }) => {
   const ctx = useContext(Context);
-  const { uid, set, data, notify, activeMonth, profile } = ctx;
+  const { uid, set, data, notify, activeMonth } = ctx;
 
-  const [loadingDelete, setLoadingDelete] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const removeItem = async () => {
-    setLoadingDelete("Deleting...");
+    setLoading("Deleting...");
     let tmpIncome = 0;
     let tmpExpense = 0;
     const tmpItems = [].concat(data || []);
@@ -48,7 +48,7 @@ const DeleteItem = ({ id, setShowDetails }) => {
       })
       .catch((err) => {
         notify("error", err.message);
-        setLoadingDelete(null);
+        setLoading(null);
       });
   };
 
@@ -59,7 +59,7 @@ const DeleteItem = ({ id, setShowDetails }) => {
         icon="delete_outline"
         color="red"
         text="Delete"
-        loading={loadingDelete}
+        loading={loading}
       />
     </>
   );

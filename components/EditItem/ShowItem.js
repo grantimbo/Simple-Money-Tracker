@@ -8,38 +8,38 @@ import EditItemFooter from "./EditItemFooter";
 
 const ShowItem = (props) => {
   const ctx = useContext(Context);
-  const { id, value, note, date, method, setEditItem, setShowDetails } = props;
+  const { data, setEditItem, setShowDetails } = props;
 
   return (
     <>
       <section className="grid gap-1 text-base md:text-lg">
         <div>
-          <span>{`${method == 0 ? "Expense" : "Income"}: `}</span>
+          <span>{`${data?.method == 0 ? "Expense" : "Income"}: `}</span>
           <span className="font-medium">{`${
             ctx?.profile?.currency ? ctx?.profile?.currency : "$"
-          }${numberWithCommas(value || 0)}`}</span>
+          }${numberWithCommas(data?.value || 0)}`}</span>
         </div>
 
         <div>
           <span>{`Note: `}</span>
-          <span className="font-medium">{note}</span>
+          <span className="font-medium">{data?.note}</span>
         </div>
 
         <div>
           <span>{`Date: `}</span>
-          <span className="font-medium">{displayDate(date)}</span>
+          <span className="font-medium">{displayDate(data?.date)}</span>
         </div>
 
         <div>
           <span>{`Category: `}</span>
           <span className="font-medium capitalize">
-            {method == 0 ? "Expense" : "Income"}
+            {data?.method == 0 ? "Expense" : "Income"}
           </span>
         </div>
       </section>
 
       <EditItemFooter>
-        <DeleteItem id={id} setShowDetails={setShowDetails} />
+        <DeleteItem id={data?.id} setShowDetails={setShowDetails} />
         <Button onClick={() => setEditItem(true)} icon="edit" text="Edit" />
       </EditItemFooter>
     </>

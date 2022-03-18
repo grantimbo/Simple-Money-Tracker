@@ -10,20 +10,12 @@ import Button from "../Button";
 const UpdateItem = (props) => {
   const ctx = useContext(Context);
   const { uid, set, notify, activeMonth } = ctx;
-  const {
-    id,
-    date,
-    note,
-    value,
-    setValue,
-    setNote,
-    setDate,
-    setEditItem,
-    method,
-    setShowDetails,
-  } = props;
+  const { data, setEditItem, setShowDetails } = props;
 
   const [loading, setLoading] = useState(null);
+  const [value, setValue] = useState(data?.value);
+  const [date, setDate] = useState(data?.date);
+  const [note, setNote] = useState(data?.note);
 
   const updateData = async () => {
     // check for erors
@@ -44,7 +36,7 @@ const UpdateItem = (props) => {
 
     // assign new values
     tmpItems.forEach((e) => {
-      if (e.id == id) {
+      if (e.id == data?.id) {
         e.value = value;
         e.date = new Date(date).getTime();
         e.note = note;
@@ -124,7 +116,9 @@ const UpdateItem = (props) => {
           color="gray"
           value={note}
           setValue={setNote}
-          placeholder={`Notes for this ${method == 0 ? "Expense" : "Income"}`}
+          placeholder={`Notes for this ${
+            data?.method == 0 ? "Expense" : "Income"
+          }`}
           additionalClasses="mb-4"
         />
       </section>

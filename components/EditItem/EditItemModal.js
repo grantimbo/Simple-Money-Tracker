@@ -2,11 +2,9 @@ import { useState } from "react";
 import UpdateItem from "./UpdateItem";
 import ShowItem from "./ShowItem";
 
-const Details = ({ data, setShowDetails }) => {
+const Details = (props) => {
+  const { data } = props;
   const [editItem, setEditItem] = useState(false);
-  const [value, setValue] = useState(data?.value);
-  const [date, setDate] = useState(data?.date);
-  const [note, setNote] = useState(data?.note);
 
   return (
     <>
@@ -28,28 +26,9 @@ const Details = ({ data, setShowDetails }) => {
       </div>
 
       {!editItem ? (
-        <ShowItem
-          value={value}
-          date={date}
-          note={note}
-          id={data?.id}
-          method={data?.method}
-          setEditItem={setEditItem}
-          setShowDetails={setShowDetails}
-        />
+        <ShowItem {...props} setEditItem={setEditItem} />
       ) : (
-        <UpdateItem
-          value={value}
-          date={date}
-          note={note}
-          setValue={setValue}
-          setDate={setDate}
-          setNote={setNote}
-          id={data?.id}
-          method={data?.method}
-          setEditItem={setEditItem}
-          setShowDetails={setShowDetails}
-        />
+        <UpdateItem {...props} setEditItem={setEditItem} />
       )}
     </>
   );

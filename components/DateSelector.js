@@ -20,6 +20,7 @@ const DateSelector = () => {
         set("total", docSnap.data().total);
       } else {
         set("data", []);
+        set("monthList", [activeMonth]);
         set("total", {
           income: 0,
           expense: 0,
