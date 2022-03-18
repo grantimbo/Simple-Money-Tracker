@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import ButtonLink from "../components/ButtonLink";
 import Title from "../components/Title";
 import { generateID } from "../support/generateID";
+import { formatAuthCode } from "../support/formatErrorCodes";
 
 const SignUp = () => {
   const ctx = useContext(Context);
