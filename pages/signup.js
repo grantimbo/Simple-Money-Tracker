@@ -127,6 +127,8 @@ const SignUp = () => {
           icon="person_outline"
         />
 
+        <p className="text-center py-2 text-gray-500">or</p>
+
         <ButtonLink
           href={`/login`}
           text="I have already an Account"
