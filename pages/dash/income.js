@@ -22,7 +22,7 @@ export default function Income() {
       <DashLayout>
         <BackHomeLink />
         <PageTitle title={`Income`} />
-        <div className="mb-4">
+        <div className="mb-10">
           <TotalCard
             currency={currency}
             name="Income"

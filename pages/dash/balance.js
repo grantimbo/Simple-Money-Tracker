@@ -19,7 +19,7 @@ export default function Balance() {
       <DashLayout>
         <BackHomeLink />
         <PageTitle title={`Balance`} />
-        <div className="mb-4">
+        <div className="mb-10">
           <TotalCard
             currency={currency}
             name="Balance"
