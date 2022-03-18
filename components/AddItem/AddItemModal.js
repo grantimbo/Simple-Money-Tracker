@@ -87,7 +87,7 @@ const AddItem = ({ setAddItem }) => {
   };
 
   const displayMethod = () => {
-    return method == 0 ? "Income" : "Expense";
+    return method == 0 ? "Expense" : "Income";
   };
 
   return (
