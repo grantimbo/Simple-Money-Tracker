@@ -28,7 +28,7 @@ const Recovery = () => {
       })
       .catch((error) => {
         setLoading(null);
-        ctx.notify("error", error.message);
+        ctx.notify("error", formatAuthCode(error.code));
       });
   };
 

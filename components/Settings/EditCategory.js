@@ -1,13 +1,7 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useState, useContext, useEffect } from "react";
-import Router from "next/router";
-import DashLayout from "../DashLayout";
-import Header from "../Header";
+import { useState, useContext } from "react";
 import { Context } from "../../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Button from "../Button";
-
 import { categoryIcons } from "../../support/categoryIcons";
 import Input from "../Input";
 

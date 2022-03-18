@@ -98,14 +98,14 @@ const SignUp = () => {
           });
 
           Router.push("/dash");
-          ctx.notify("success", "Succefully created account");
+          ctx.notify("success", "Account successfully created");
         };
 
         addDataToFirebase();
       })
       .catch((error) => {
         setLoading(null);
-        ctx.notify("error", error.message);
+        ctx.notify("error", formatAuthCode(error.code));
       });
   };
 

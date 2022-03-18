@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import ButtonLink from "../components/ButtonLink";
 import Title from "../components/Title";
+import { formatAuthCode } from "../support/formatErrorCodes";
 
 const Login = () => {
   const ctx = useContext(Context);
@@ -24,11 +25,11 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        ctx.notify("success", "Sign in successful");
+        ctx.notify("success", "Sign in successfully");
       })
       .catch((error) => {
-        ctx.notify("error", error.message);
         setLoading(null);
+        ctx.notify("error", formatAuthCode(error.code));
       });
   };
 

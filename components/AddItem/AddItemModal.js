@@ -77,11 +77,11 @@ const AddItem = ({ setAddItem }) => {
       .then(() => {
         set("data", tmpItems);
         set("total", total);
-        notify("success", "Item added successfully");
+        notify("success", `${displayMethod()} added successfully`);
         setAddItem(false);
       })
-      .catch(() => {
-        notify("error", "Error adding item");
+      .catch((err) => {
+        notify("error", err.message);
         setLoading(null);
       });
   };

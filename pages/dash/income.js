@@ -5,31 +5,41 @@ import BackHomeLink from "../../components/BackHomeLink";
 import PageTitle from "../../components/PageTitle";
 import List from "../../components/List";
 import Title from "../../components/Title";
-import TotalCard from "../../components/Overview/TotalCard";
+import BarChart from "../../components/Overview/BarChart";
 
 export default function Income() {
   const ctx = useContext(Context);
-  const {
-    total,
-    profile: { currency },
-  } = ctx;
 
-  const incomeList = ctx?.data?.filter((item) => item.method == 1);
+  const chartData = [];
+  const incomeList = [];
+
+  ctx?.data?.filter((item, index) => {
+    if (item.method == 1) {
+      incomeList.push(item);
+      if (
+        ctx?.data?.findIndex((x) => x.category.name == item.category.name) ===
+        index
+      ) {
+        chartData.push({
+          category: item.category.name,
+          value: parseInt(item.value),
+        });
+      } else {
+        let oten = chartData.findIndex(
+          (x) => x.category === item.category.name
+        );
+        chartData[oten].value += parseInt(item.value);
+      }
+    }
+  });
 
   return (
     <>
       <Title title="Income" />
       <DashLayout>
         <BackHomeLink />
-        <PageTitle title={`Income`} />
-        <div className="mb-10">
-          <TotalCard
-            currency={currency}
-            name="Income"
-            link="/dash/expenses"
-            data={total?.income}
-          />
-        </div>
+        <PageTitle title={`Income Overview`} />
+        <BarChart data={chartData} />
         <List data={incomeList} />
       </DashLayout>
     </>
