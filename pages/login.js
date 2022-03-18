@@ -12,25 +12,23 @@ const Login = () => {
   const { loggedIn } = ctx;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
     loggedIn && Router.push("/dash");
   }, [loggedIn]);
 
   const handleLogIn = () => {
-    console.log("Logging in...");
+    setLoading("Loggin In...");
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
+      .then(() => {
         ctx.notify("success", "Sign in successful");
       })
       .catch((error) => {
-        // const errorCode = error.code;
         ctx.notify("error", error.message);
-        // ..
+        setLoading(null);
       });
   };
 
@@ -46,7 +44,12 @@ const Login = () => {
           setValue={setPassword}
           placeholder="Password"
         />
-        <Button onClick={() => handleLogIn()} text="Login" icon="lock" />
+        <Button
+          onClick={() => handleLogIn()}
+          text="Login"
+          icon="lock"
+          loading={loading}
+        />
 
         <p className="text-center py-2 text-gray-500">or</p>
 

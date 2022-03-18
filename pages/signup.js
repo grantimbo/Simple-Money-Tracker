@@ -14,6 +14,8 @@ const SignUp = () => {
   const { loggedIn } = ctx;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(null);
+
   const auth = getAuth();
   const db = getFirestore();
 
@@ -26,6 +28,7 @@ const SignUp = () => {
       ctx.notify("error", "Please enter an email and password");
       return;
     }
+    setLoading("Creating Account...");
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -101,6 +104,7 @@ const SignUp = () => {
         addDataToFirebase();
       })
       .catch((error) => {
+        setLoading(null);
         ctx.notify("error", error.message);
       });
   };
@@ -125,6 +129,7 @@ const SignUp = () => {
           onClick={() => createAccount()}
           text="Create Account"
           icon="person_outline"
+          loading={loading}
         />
 
         <p className="text-center py-2 text-gray-500">or</p>

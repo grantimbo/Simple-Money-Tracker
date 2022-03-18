@@ -11,20 +11,23 @@ const Recovery = () => {
   const ctx = useContext(Context);
   const { loggedIn } = ctx;
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
     loggedIn && Router.push("/dash");
   }, [loggedIn]);
 
   const resetPassword = () => {
-    console.log("Logging in...");
+    setLoading("Sending...");
     const auth = getAuth();
 
     sendPasswordResetEmail(auth, email)
       .then(() => {
+        setLoading(null);
         ctx.notify("success", "Password reset email sent!");
       })
       .catch((error) => {
+        setLoading(null);
         ctx.notify("error", error.message);
       });
   };
@@ -42,6 +45,7 @@ const Recovery = () => {
           onClick={() => resetPassword()}
           text="Reset Password"
           icon="lock"
+          loading={loading}
         />
 
         <p className="text-center py-2 text-gray-500">or</p>
