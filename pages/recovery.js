@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import ButtonLink from "../components/ButtonLink";
 import Title from "../components/Title";
+import { formatAuthCode } from "../support/formatErrorCodes";
 
 const Recovery = () => {
   const ctx = useContext(Context);
