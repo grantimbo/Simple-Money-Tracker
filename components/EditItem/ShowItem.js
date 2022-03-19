@@ -26,15 +26,13 @@ const ShowItem = (props) => {
         </div>
 
         <div>
-          <span>{`Date: `}</span>
-          <span className="font-medium">{displayDate(data?.date)}</span>
+          <span>{`Category: `}</span>
+          <span className="font-medium capitalize">{data?.category?.name}</span>
         </div>
 
         <div>
-          <span>{`Category: `}</span>
-          <span className="font-medium capitalize">
-            {data?.method == 0 ? "Expense" : "Income"}
-          </span>
+          <span>{`Date: `}</span>
+          <span className="font-medium">{displayDate(data?.date)}</span>
         </div>
       </section>
 

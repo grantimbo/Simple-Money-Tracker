@@ -9,8 +9,8 @@ const Modal = ({ children, onClose }) => {
   }, []);
 
   return (
-    <div className="fixed -top-2 left-0 bottom-0 right-0 p-4 fade-in z-50 md:p-10">
-      <div className="bg-gray-50 rounded-lg p-4 max-w-lg w-full mx-auto mt-4 relative z-10 shadow-sm md:mt-20">
+    <div className="fixed -top-2 left-0 bottom-0 right-0 p-4 fade-in z-50 md:p-10 overflow-x-auto">
+      <div className="bg-gray-50 rounded-lg p-4 max-w-lg w-full mx-auto mt-4 relative z-10 shadow-sm md:mt-20 ">
         <div
           onClick={onClose}
           className="absolute right-3 top-2 cursor-pointer "
@@ -23,8 +23,8 @@ const Modal = ({ children, onClose }) => {
 
       <div
         onClick={onClose}
-        className="absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-30"
-      ></div>
+        className="fixed top-0 left-0 bottom-0 right-0 bg-black bg-opacity-30"
+      />
     </div>
   );
 };

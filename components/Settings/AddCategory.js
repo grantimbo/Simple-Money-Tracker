@@ -2,9 +2,12 @@ import { useState, useContext, useEffect } from "react";
 import { Context } from "../../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Button from "../Button";
-import { categoryIcons } from "../../support/categoryIcons";
+
 import Input from "../Input";
 import { generateID } from "../../support/generateID";
+import MethodSelector from "./MethodSelector";
+import InputLabel from "../InputLabel";
+import IconSelector from "./IconSelector";
 
 export default function AddCategory({ setAddCategoryModal }) {
   const ctx = useContext(Context);
@@ -14,7 +17,7 @@ export default function AddCategory({ setAddCategoryModal }) {
   const [name, setName] = useState(null);
   const [icon, setIcon] = useState(null);
 
-  const saveCategory = async () => {
+  const addCategory = async () => {
     //check for erors
     if (!name || !icon || method === null) {
       ctx?.notify("error", "Please fill the empty fields");
@@ -57,73 +60,28 @@ export default function AddCategory({ setAddCategoryModal }) {
   };
 
   return (
-    <main className="">
-      <div className="mt-6">
-        <div className="grid">
-          <p className="text-gray-400 text-base mb-1">Name</p>
-          <Input
-            type={"text"}
-            color="gray"
-            setValue={setName}
-            className="bg-gray-50 border px-4 py-2 rounded-md focus:outline-orange-500"
-            placeholder="Name"
-            additionalClasses="mb-4"
-          />
+    <div className="mt-6 grid">
+      <InputLabel text="Name" />
+      <Input
+        type={"text"}
+        color="gray"
+        setValue={setName}
+        placeholder="Name"
+        additionalClasses="mb-4"
+      />
 
-          <p className="text-gray-400 text-base mb-1">Category</p>
-          <div className="flex space-x-2 mb-4">
-            <div
-              onClick={() => setMethod(0)}
-              className={`${
-                method === 0
-                  ? "bg-lime-500 text-white"
-                  : "bg-lime-100 text-lime-500 border-lime-400 border-2"
-              } px-4 py-1 rounded-full cursor-pointer`}
-            >
-              Expense
-            </div>
-            <div
-              onClick={() => setMethod(1)}
-              className={`${
-                method === 1
-                  ? "bg-lime-500 text-white"
-                  : "bg-lime-100 text-lime-500 border-lime-400 border-2"
-              } px-4 py-1 rounded-full cursor-pointer`}
-            >
-              Income
-            </div>
-          </div>
+      <InputLabel text="Category" />
+      <MethodSelector method={method} setMethod={setMethod} />
 
-          <p className="text-gray-400 text-base mb-1">Icon</p>
-          <div className="max-h-72 overflow-y-auto  mb-6">
-            <div className="grid gap-1 grid-cols-6">
-              {categoryIcons?.map((e) => (
-                <div
-                  key={e}
-                  onClick={(e) => setIcon(e?.target?.dataset?.value)}
-                  data-value={e}
-                  className={`${
-                    icon == e
-                      ? "bg-lime-500 text-lime-100 border-lime-400 "
-                      : "bg-gray-100 text-gray-400"
-                  } flex items-center justify-center border px-4 py-2 rounded-md cursor-pointer`}
-                >
-                  <span className="material-icons-round " data-value={e}>
-                    {e}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+      <InputLabel text="Icon" />
+      <IconSelector icon={icon} setIcon={setIcon} />
 
-          <Button
-            onClick={() => saveCategory()}
-            text="Save Category"
-            icon="save"
-            loading={loading}
-          ></Button>
-        </div>
-      </div>
-    </main>
+      <Button
+        onClick={() => addCategory()}
+        text="Save Category"
+        icon="save"
+        loading={loading}
+      />
+    </div>
   );
 }

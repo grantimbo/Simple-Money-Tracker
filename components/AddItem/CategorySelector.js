@@ -1,8 +1,12 @@
 import { Context } from "../../support/globalState";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const CategorySelector = ({ method, category, setCategory }) => {
   const ctx = useContext(Context);
+
+  useEffect(() => {
+    setCategory(null);
+  }, [method]);
 
   const expense = ctx?.profile?.categories?.filter((e) => e.method == 0);
   const income = ctx?.profile?.categories?.filter((e) => e.method == 1);

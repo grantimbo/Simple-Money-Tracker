@@ -26,11 +26,13 @@ const AddItem = ({ setAddItem }) => {
 
   const saveItem = async () => {
     // check for erors
-    if (!category || value <= 0) {
-      ctx.notify("error", "Please fill all the fields");
+    if (value <= 0 || !category) {
+      !category && ctx?.notify("error", "Please select a category");
+      value <= 0 && ctx?.notify("error", "Please enter a valid value");
       return;
     }
 
+    // set loading
     setLoading("Saving...");
 
     // add new data
@@ -39,7 +41,9 @@ const AddItem = ({ setAddItem }) => {
       category: category,
       value: value,
       date: Date.now(),
-      note: note,
+      note: !note
+        ? `${category?.name} ${method == 0 ? "expense" : "income"}`
+        : note,
       method: method,
     });
 
