@@ -106,7 +106,7 @@ const AddItem = ({ setAddItem }) => {
           color={`gray`}
           type={`number`}
           setValue={setValue}
-          placeholder={`${profile?.account?.currency || "$"}0.00`}
+          placeholder={`${profile?.currency || "$"}0.00`}
           additionalClasses="mb-3 md:mb-6"
         />
 

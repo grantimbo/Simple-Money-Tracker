@@ -1,3 +1,4 @@
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import { useState, useContext } from "react";
 import { Context } from "../../support/globalState";
 import Button from "../Button";

@@ -10,7 +10,7 @@ const LogOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        ctx.notify("success", "Sign out successful");
+        ctx.notify("success", "Sign out successfully");
         Router.push(`/login`);
       })
       .catch((error) => {

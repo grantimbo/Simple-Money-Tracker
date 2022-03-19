@@ -1,8 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Context } from "../../support/globalState";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Button from "../Button";
-
 import Input from "../Input";
 import { generateID } from "../../support/generateID";
 import MethodSelector from "./MethodSelector";
