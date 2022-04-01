@@ -15,19 +15,18 @@ export default function Home() {
           <div>
             <h1 className="text-3xl font-medium mb-1 md:mb-4 md:text-5xl text-lime-500">
               {`A super simple money tracker`}
-              {/* {`Easy to use..`} */}
             </h1>
             <p className="text-lg font-light mb-6 md:mb-10 md:text-2xl">
               {`Track your earnings and spendings in the most easy and efficient way.`}
             </p>
             <ButtonLink
               text="Create Account"
-              href="/login"
+              href="/signup"
               additionalClasses="md:hidden"
             />
             <ButtonLink
               text="Create Account"
-              href="/login"
+              href="/signup"
               size="xl"
               additionalClasses="hidden md:inline-flex"
             />
