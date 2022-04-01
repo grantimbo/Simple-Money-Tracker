@@ -34,7 +34,7 @@ const Header = () => {
         )}
 
         {!ctx?.loggedIn && (
-          <ButtonLink href="/login" text="Login" icon="lock" color="gray" />
+          <ButtonLink href="/login" text="Login" icon="lock" />
         )}
       </nav>
 
