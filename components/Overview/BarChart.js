@@ -1,7 +1,7 @@
 import { Context } from "../../support/globalState";
 import { useContext } from "react";
 
-const BarChart = ({ data }) => {
+const BarChart = ({ data, filterWord, setFilterWord }) => {
   const ctx = useContext(Context);
 
   const total = data.reduce((a, b) => {
@@ -22,7 +22,11 @@ const BarChart = ({ data }) => {
 
             <div
               className="h-2 bg-lime-100 rounded-full overflow-hidden w-full relative hover:opacity-80 cursor-pointer md:h-4"
-              onClick={() => alert("WIP")}
+              onClick={() => {
+                filterWord === e.category
+                  ? setFilterWord(null)
+                  : setFilterWord(e?.category);
+              }}
             >
               <span
                 className="absolute top-0 bottom-0 left-0 bg-lime-400 "

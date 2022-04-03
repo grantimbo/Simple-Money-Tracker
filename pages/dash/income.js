@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Context } from "../../support/globalState";
 import DashLayout from "../../components/DashLayout";
 import BackHomeLink from "../../components/BackHomeLink";
@@ -9,6 +9,8 @@ import BarChart from "../../components/Overview/BarChart";
 
 export default function Income() {
   const ctx = useContext(Context);
+  const [filterWord, setFilterWord] = useState(null);
+  const [filteredItems, setFilteredItems] = useState([]);
 
   const chartData = [];
   const incomeList = [];
@@ -33,14 +35,33 @@ export default function Income() {
     }
   });
 
+  useEffect(() => {
+    if (!filterWord) {
+      setFilteredItems(incomeList);
+    } else {
+      const filtered = incomeList.filter((item) => {
+        if (
+          item.category.name.toLowerCase().includes(filterWord.toLowerCase())
+        ) {
+          return item;
+        }
+      });
+      setFilteredItems(filtered);
+    }
+  }, [filterWord]);
+
   return (
     <>
       <Title title="Income" />
       <DashLayout>
         <BackHomeLink />
         <PageTitle title={`Income Overview`} />
-        <BarChart data={chartData} />
-        <List data={incomeList} />
+        <BarChart
+          data={chartData}
+          filterWord={filterWord}
+          setFilterWord={setFilterWord}
+        />
+        <List data={filteredItems} />
       </DashLayout>
     </>
   );

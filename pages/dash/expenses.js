@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Context } from "../../support/globalState";
 import DashLayout from "../../components/DashLayout";
 import BackHomeLink from "../../components/BackHomeLink";
@@ -9,6 +9,8 @@ import BarChart from "../../components/Overview/BarChart";
 
 export default function Expenses() {
   const ctx = useContext(Context);
+  const [filterWord, setFilterWord] = useState(null);
+  const [filteredItems, setFilteredItems] = useState([]);
 
   const chartData = [];
   const expenseList = [];
@@ -33,14 +35,33 @@ export default function Expenses() {
     }
   });
 
+  useEffect(() => {
+    if (!filterWord) {
+      setFilteredItems(expenseList);
+    } else {
+      const filtered = expenseList.filter((item) => {
+        if (
+          item.category.name.toLowerCase().includes(filterWord.toLowerCase())
+        ) {
+          return item;
+        }
+      });
+      setFilteredItems(filtered);
+    }
+  }, [filterWord]);
+
   return (
     <>
       <Title title="Expenses" />
       <DashLayout>
         <BackHomeLink />
         <PageTitle title={`Expenses Overview`} />
-        <BarChart data={chartData} />
-        <List data={expenseList} />
+        <BarChart
+          data={chartData}
+          filterWord={filterWord}
+          setFilterWord={setFilterWord}
+        />
+        <List data={filteredItems} />
       </DashLayout>
     </>
   );

@@ -23,14 +23,14 @@ export default function AddCategory({ setAddCategoryModal }) {
       return;
     }
 
-    setLoading("Saving...");
-
     //  check for duplicates
     const tmpCategories = [].concat(ctx?.profile?.categories || []);
     if (tmpCategories?.find((e) => e?.name === name)) {
       ctx?.notify("error", "Category already exist");
       return;
     }
+
+    setLoading("Saving...");
 
     // push new items
     tmpCategories.push({
