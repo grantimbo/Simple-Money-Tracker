@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
+import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
+import { useContext, useState } from "react";
 import { Context } from "../../support/globalState";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
 import Button from "../Button";
 import Input from "../Input";
 import InputLabel from "../InputLabel";
-import IconSelector from "./IconSelector";
 import DeleteCategory from "./DeleteCategory";
+import IconSelector from "./IconSelector";
 
 export default function EditCategory(props) {
   const ctx = useContext(Context);
@@ -21,24 +21,47 @@ export default function EditCategory(props) {
     }
 
     setUpdating("Updating...");
-    const tmpCategories = [].concat(ctx?.profile?.categories || []);
+    const tmpCategories = [].concat(ctx?.profile?.categories || []).map((e) => {
+      if (e?.id == data?.id) {
+        return {
+          ...e,
+          name: name,
+          icon: icon,
+        };
+      }
+      return e;
+    });
 
-    const tmpData = {
-      ...ctx?.profile,
-      categories: tmpCategories.map((e) => {
-        if (e?.id == data?.id) {
-          return {
-            ...e,
+    const tmpExpensesIncome = [].concat(ctx?.data || []).map((e) => {
+      if (e?.category.name == name) {
+        return {
+          ...e,
+          category: {
             name: name,
             icon: icon,
-          };
-        }
-        return e;
-      }),
+          },
+        };
+      }
+      return e;
+    });
+
+    const tmpProfileData = {
+      ...ctx?.profile,
+      categories: tmpCategories,
+    };
+
+    const finalData = {
+      data: tmpExpensesIncome,
+      total: ctx?.total,
     };
 
     const db = getFirestore();
-    await setDoc(doc(db, "users", ctx?.uid), tmpData)
+    const dataRef = collection(db, `users/${ctx?.uid}/data`);
+
+    Promise.all([
+      await setDoc(doc(dataRef, ctx?.activeMonth), finalData),
+      await setDoc(doc(db, "users", ctx?.uid), tmpProfileData),
+    ])
       .then(() => {
         ctx?.notify("success", "Category successfully updated");
         setEditCategoryModal(null);
