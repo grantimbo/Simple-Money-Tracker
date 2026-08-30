@@ -66,7 +66,7 @@ const AddItem = ({ setAddItem }) => {
     const total = {
       income: roundCurrency(tmpIncome),
       expense: roundCurrency(tmpExpense),
-      balance: roundCurrency(tmpExpense - tmpIncome),
+      balance: roundCurrency(tmpIncome - tmpExpense),
     };
 
     // final data
